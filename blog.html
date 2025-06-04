@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>Blog | Ronan_JoJo</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="theme-color" content="#222325">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/SimonAKing/font/font.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <meta name="description" content="Ronan_JoJo's Blog">
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <style>
+    body {
+        background: #232329;
+        color: #dedede;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        min-height: 100vh;
+        margin: 0;
+    }
+    main {
+        display: flex;
+        max-width: 1400px;
+        width: 90vw;
+        margin: 48px auto 0 auto;
+        padding: 0 20px;
+        box-sizing: border-box;
+        min-height: 90vh;
+    }
+    .sidebar {
+        width: 230px;
+        min-width: 180px;
+        margin-right: 42px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 48px;
+        align-self: flex-start;
+    }
+    .sidebar-title {
+        font-size: 1.18rem;
+        color: #bfcfff;
+        letter-spacing: 1px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        margin-top: 0;
+    }
+    .sidebar-nav {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 36px 0;
+    }
+    .sidebar-nav li {
+        margin-bottom: 15px;
+    }
+    .sidebar-nav a {
+        color: #90caf9;
+        text-decoration: none;
+        font-size: 1.1rem;
+        border-radius: 7px;
+        display: block;
+        padding: 8px 12px;
+        transition: background .15s, color .15s;
+    }
+    .sidebar-nav a:hover,
+    .sidebar-nav a.active {
+        background: #31334c;
+        color: #fbc2eb;
+    }
+    .tag-filter {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px 16px;
+        margin-bottom: 32px;
+    }
+    .tag-btn {
+        font-size: 1.08rem;
+        padding: 8px 22px;
+        border: none;
+        border-radius: 15px;
+        background: #2a2d36;
+        color: #90caf9;
+        cursor: pointer;
+        transition: background .15s, color .15s;
+    }
+    .tag-btn.active,
+    .tag-btn:hover {
+        background: #40c9ff;
+        color: #fff;
+    }
+    .blog-main {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        height: 90vh;
+    }
+    .blog-title {
+        text-align: center;
+        font-size: 2.5rem;
+        letter-spacing: 2px;
+        margin-bottom: 28px;
+        color: #fff;
+        font-weight: 300;
+        flex-shrink: 0;
+    }
+    .blog-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        overflow-y: auto;
+        flex: 1;
+        min-height: 0;
+        max-height: 100%;
+        scrollbar-width: thin;
+        scrollbar-color: #444 #272831;
+    }
+    .blog-list::-webkit-scrollbar {
+        width: 9px;
+        background: #232329;
+    }
+    .blog-list::-webkit-scrollbar-thumb {
+        background: #444;
+        border-radius: 5px;
+    }
+    .blog-item {
+        background: #272831;
+        border-radius: 18px;
+        box-shadow: 0 3px 18px rgba(0,0,0,0.11);
+        padding: 36px 34px 22px 34px;
+        margin-bottom: 36px;
+        border-left: 7px solid #40c9ff;
+        transition: all .18s cubic-bezier(.42,0,.57,1.02);
+    }
+    .blog-item:hover {
+        transform: translateY(-2px) scale(1.01);
+        box-shadow: 0 14px 48px 0 rgba(64,201,255,0.17);
+        border-left: 7px solid #fbc2eb;
+    }
+    .blog-item-title {
+        font-size: 1.35rem;
+        margin: 0 0 12px 0;
+        color: #62d3ff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    .blog-item-title:hover {
+        color: #fbc2eb;
+        text-decoration: underline;
+    }
+    .blog-item-meta {
+        font-size: 1.05rem;
+        color: #b5bac6;
+        margin-bottom: 12px;
+    }
+    .blog-item-summary {
+        font-size: 1.15rem;
+        color: #ededed;
+        line-height: 1.75;
+        margin-bottom: 0;
+        word-break: break-all;
+        white-space: normal;
+    }
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 12px;
+        margin-top: 20px;
+        padding-bottom: 20px;
+    }
+    .pagination-btn {
+        min-width: 34px;
+        padding: 8px 13px;
+        font-size: 1.07rem;
+        border: none;
+        border-radius: 8px;
+        background: #282f3a;
+        color: #90caf9;
+        cursor: pointer;
+        transition: background .15s, color .15s;
+    }
+    .pagination-btn.active,
+    .pagination-btn:hover {
+        background: #40c9ff;
+        color: #fff;
+    }
+    .pagination-btn[disabled] {
+        background: #232329;
+        color: #555;
+        cursor: not-allowed;
+    }
+    @media (max-width: 1200px) {
+        main { max-width: 100vw; }
+        .sidebar { width: 170px; margin-right: 16px; }
+    }
+    @media (max-width: 900px) {
+        main { flex-direction: column; }
+        .sidebar {
+            width: 100%;
+            margin: 0 0 18px 0;
+            position: static;
+        }
+    }
+    @media (max-width: 600px) {
+        .blog-main { padding: 6px 1px; height: 97vh; }
+        .blog-title { font-size: 1.3rem; }
+        .blog-item { padding: 14px 6px 10px 6px; }
+        main { padding: 0 2px; }
+    }
+</style>
+
+</head>
+<body>
+<main>
+    <!-- 侧边栏 -->
+    <aside class="sidebar">
+        <div class="sidebar-title">导航</div>
+        <ul class="sidebar-nav">
+            <li><a href="../index.html">🏠 主页</a></li>
+            <li><a href="blog.html" class="active">📝 博客</a></li>
+            <li><a href="../about.html">👤 关于</a></li>
+            <li><a href="mailto:lissblisslx@gmali.com">✉️ 联系</a></li>
+        </ul>
+        <div class="sidebar-title">快速标签</div>
+        <ul class="sidebar-nav" id="quick-tags">
+            <!-- JS自动填充标签列表 -->
+        </ul>
+    </aside>
+    <!-- 主区 -->
+    <div class="blog-main">
+        <h1 class="blog-title">Blog</h1>
+        <div class="tag-filter" id="tag-filter"></div>
+        <ul class="blog-list" id="blog-list">
+            <!-- JS渲染分页后内容 -->
+        </ul>
+        <div class="pagination" id="pagination"></div>
+    </div>
+</main>
+<script>
+/* 博客数据 */
+const BLOGS = [
+    {
+        title: "低俗小说：当暴力变成一场荒诞的舞蹈",
+        href: "#",
+        date: "2025-06-04",
+        tags: ["简评", "昆汀", "电影"],
+        summary: `优点：我太喜欢了，没有缺点<br>评分：9/10<br>
+        昆汀用喋喋不休的废话和突如其来的暴力，把类型片撕成碎片，然后重新拼贴成一幅后现代拼贴画。<br>
+        文森特和朱尔斯的圣经引用、布奇祖传金表的荒诞历史、蜜娅的致命扭扭舞——这些看似无关的碎片最终拼合成一个诡异的整体。<br>
+        昆汀在玩弄时间的同时，也在玩弄观众的预期，就像文森特给米娅的那针肾上腺素，直接扎进观影体验的心脏。<br>
+        角色们用废话构建着自己的哲学。朱尔斯关于"美味汉堡"的独白、文森特对欧洲快餐文化的吐槽、沃夫先生关于"清理现场"的精确指导——这些看似无意义的对话恰恰揭示了角色的生存状态。<br>
+        在昆汀的世界里，杀手会为脚底按摩的道德问题争论不休，黑帮老大的女人会为奶昔的好坏较真，这正是《低俗小说》最迷人的地方！`
+    },
+    {
+        title: "八恶人：昆汀的暴风雪密室杀人剧",
+        href: "#",
+        date: "2025-06-04",
+        tags: ["简评", "昆汀", "电影"],
+        summary: `优点：话痨+暴力<br>槽点：节奏拖沓，自恋过头<br>评分：7/10<br>
+        故事设定在怀俄明州的暴风雪中，一群身份可疑的恶人被困在一间驿站里，猜忌、背叛、复仇接连上演。封闭空间+群戏，让这部电影像一场西部版的《无人生还》。塞缪尔·杰克逊饰演的赏金猎人沃伦少校和沃尔顿·戈金斯饰演的南方叛军领袖之间的对峙，堪称全片最精彩的对手戏——昆汀式的长篇大论在这里不是废话，而是心理博弈的武器。<br>
+        摄影更是美得惊人，70mm胶片拍摄的雪原和木屋，让每一帧都像一幅古典油画。恩尼奥·莫里康内的配乐阴森诡谲，完美烘托出悬疑和暴力的氛围。<br>
+        但这部电影也暴露了昆汀近年来的毛病——太自恋了。将近3小时的片长，前一个半小时几乎全是角色坐在屋里唠嗑，虽然台词犀利，但节奏确实慢得让人想快进。尤其是第二章的叙事结构，强行插叙+旁白，感觉昆汀在炫技，而不是为故事服务。<br>
+        此外，某些暴力场面虽然震撼，但也显得刻意甚至冗余。比如黛西·多摩格的结局，血腥程度直逼《杀死比尔》，但冲击力反而因为过度渲染而减弱。还有那个“林肯的信”桥段，煽情得有点突兀，像是昆汀硬塞进去的“深度”，结果反而显得做作。`
+    },
+    {
+        title: "导剪版「正义联盟」：这不是一部电影，而是一场信仰。",
+        href: "#",
+        date: "2025-06-04",
+        tags: ["简评", "扎导", "电影", "DC"],
+        summary: `优点：扎导的视觉诗学与角色灵魂<br>槽点：头号粉丝的代价<br>评分：8/10(粉丝滤镜加成)<br>
+        真正的史诗感：从慢镜下的亚马逊战士、远古大战中的旧神交锋，到超人复活时的《希望》主题曲响起，每一帧都像是一幅油画。扎克的镜头语言让超级英雄电影超越了爆米花娱乐，变成了一部神话。<br>
+        角色终于完整了：闪电侠不再是尴尬的笑话担当，他的悲情背景和关键时刻的“神速力穿越”让这个角色有了真正的英雄时刻。钢骨的起源故事终于被讲述，他的挣扎与成长成为全片最动人的弧线之一。蝙蝠侠找回了黑暗骑士的厚重感，不再是那个只会说“我超有钱”的土豪。荒原狼不再是卡通反派，而是一个被达克赛德奴役的悲剧战士，他的新造型和动机都更加合理且慑人。<br>
+        节奏问题：4小时确实太长，某些片段（比如火星猎人突然现身）虽然让粉丝狂喜，但对普通观众来说可能显得冗余。<br>
+        华纳的阴影：这部电影的存在本身就是一场行为艺术——它证明了2017年院线版被干涉得有多惨烈，但也让人更痛心DCEU的混乱管理。<br>
+        扎导剪辑版《正义联盟》不仅仅是一部电影，而是一场运动的结果——是粉丝的请愿、演员的支持、导演的坚持共同创造的奇迹。它不完美，但它终于让这个版本的正义联盟有了灵魂、重量与尊严。`
+    }
+];
+/* 标签提取 */
+const TAGS = Array.from(new Set(BLOGS.flatMap(blog => blog.tags)));
+
+/* 分页参数 */
+const PAGE_SIZE = 2;
+let currentPage = 1;
+let currentTag = null;
+
+/* 渲染标签按钮 */
+function renderTags() {
+    const container = document.getElementById('tag-filter');
+    container.innerHTML = `<button class="tag-btn${!currentTag ? ' active' : ''}" onclick="selectTag(null)">全部</button>` +
+        TAGS.map(tag => `<button class="tag-btn${tag === currentTag ? ' active' : ''}" onclick="selectTag('${tag}')">${tag}</button>`).join('');
+    // 侧边快捷标签
+    const quickTags = document.getElementById('quick-tags');
+    quickTags.innerHTML = TAGS.map(tag => `<li><a href="javascript:void(0)" onclick="selectTag('${tag}')" class="${tag===currentTag?'active':''}">${tag}</a></li>`).join('');
+}
+
+/* 渲染博客列表 */
+function renderBlogs() {
+    // 筛选
+    let blogs = currentTag ? BLOGS.filter(b=>b.tags.includes(currentTag)) : BLOGS;
+    const total = blogs.length;
+    const pageCount = Math.max(1, Math.ceil(total / PAGE_SIZE));
+    if(currentPage > pageCount) currentPage = pageCount;
+    const start = (currentPage-1)*PAGE_SIZE;
+    const showBlogs = blogs.slice(start, start+PAGE_SIZE);
+    // 渲染列表
+    const list = document.getElementById('blog-list');
+    list.innerHTML = showBlogs.map(blog=>`
+        <li class="blog-item">
+            <a class="blog-item-title" href="${blog.href}" target="_blank">${blog.title}</a>
+            <div class="blog-item-meta">${blog.date} | ${blog.tags.join(', ')}</div>
+            <div class="blog-item-summary">${blog.summary}</div>
+        </li>
+    `).join('');
+    // 渲染分页
+    renderPagination(pageCount);
+}
+
+/* 渲染分页 */
+function renderPagination(pageCount) {
+    const pagination = document.getElementById('pagination');
+    if(pageCount <= 1) {
+        pagination.innerHTML = '';
+        return;
+    }
+    let btns = '';
+    btns += `<button class="pagination-btn" onclick="gotoPage(1)" ${currentPage==1?'disabled':''}>首页</button>`;
+    btns += `<button class="pagination-btn" onclick="gotoPage(${currentPage-1})" ${currentPage==1?'disabled':''}>上一页</button>`;
+    for(let i=Math.max(1,currentPage-1); i<=Math.min(pageCount, currentPage+1); i++){
+        btns += `<button class="pagination-btn${i===currentPage?' active':''}" onclick="gotoPage(${i})">${i}</button>`;
+    }
+    btns += `<button class="pagination-btn" onclick="gotoPage(${currentPage+1})" ${currentPage==pageCount?'disabled':''}>下一页</button>`;
+    btns += `<button class="pagination-btn" onclick="gotoPage(${pageCount})" ${currentPage==pageCount?'disabled':''}>尾页</button>`;
+    pagination.innerHTML = btns;
+}
+
+/* 事件方法 */
+function gotoPage(page){
+    currentPage = page;
+    renderBlogs();
+    window.scrollTo({top:0,behavior:"smooth"});
+}
+function selectTag(tag){
+    currentTag = tag;
+    currentPage = 1;
+    renderTags();
+    renderBlogs();
+}
+
+/* 初始化 */
+renderTags();
+renderBlogs();
+</script>
+</body>
+</html>
