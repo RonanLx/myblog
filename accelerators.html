@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8" />
   <title>Accelerators</title>
@@ -60,14 +61,16 @@
       display: none;
     }
 
-    .sidebar-nav, .note-list {
+    .sidebar-nav,
+    .note-list {
       list-style: none;
       padding: 0 16px;
       margin: 0 0 8px 0;
       transition: all 0.2s;
     }
 
-    .sidebar-nav li, .note-list li {
+    .sidebar-nav li,
+    .note-list li {
       padding: 12px 16px;
       margin-bottom: 8px;
       border-radius: 8px;
@@ -86,8 +89,11 @@
       height: 100%;
     }
 
-    .sidebar-nav li.active, .sidebar-nav li:hover, .sidebar-nav li a.active,
-    .note-list li.active, .note-list li:hover {
+    .sidebar-nav li.active,
+    .sidebar-nav li:hover,
+    .sidebar-nav li a.active,
+    .note-list li.active,
+    .note-list li:hover {
       background: #282832;
       color: #f5d0bd;
     }
@@ -164,12 +170,88 @@
     }
 
     @media (max-width: 800px) {
-      .sidebar { display: none; }
-      .main-content { padding: 12px 4vw; }
-      .main-content article { padding: 12px 2vw; }
+      .sidebar {
+        display: none;
+      }
+
+      .main-content {
+        padding: 12px 4vw;
+      }
+
+      .main-content article {
+        padding: 12px 2vw;
+      }
+    }
+
+    .carousel-container {
+      display: flex;
+      justify-content: center;
+      margin: 24px 0 32px 0;
+    }
+
+    .carousel {
+      display: flex;
+      align-items: center;
+      background: #191921;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px #0006;
+      padding: 12px 0;
+      width: 360px;
+      max-width: 90vw;
+      overflow: hidden;
+    }
+
+    .carousel-track {
+      display: flex;
+      width: 220px;
+      height: 150px;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.4s;
+    }
+
+    .carousel-track img {
+      width: 220px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin: 0 2px;
+      background: #222;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .carousel-btn {
+      background: none;
+      border: none;
+      color: #f5d0bd;
+      font-size: 1.8em;
+      padding: 0 14px;
+      cursor: pointer;
+      user-select: none;
+      outline: none;
+      transition: color 0.2s;
+    }
+
+    .carousel-btn:hover {
+      color: #ffd7b6;
+    }
+
+    @media (max-width: 500px) {
+      .carousel {
+        width: 240px;
+      }
+
+      .carousel-track,
+      .carousel-track img {
+        width: 120px;
+        height: 80px;
+      }
     }
   </style>
 </head>
+
 <body>
   <nav class="sidebar">
     <div class="sidebar-section">
@@ -219,6 +301,27 @@
     window.onload = function () {
       document.getElementById('note-detail').innerHTML = NOTES['welcome'];
     }
+
+    // 轮播参数
+    let carouselIndex = 0;
+    function slideCarousel(dir) {
+      const track = document.getElementById('carousel-track');
+      const imgs = track.querySelectorAll('img');
+      carouselIndex = (carouselIndex + dir + imgs.length) % imgs.length;
+      track.style.transform = `translateX(${-carouselIndex * imgs[0].offsetWidth}px)`;
+    }
+    // 每次切换到 welcome 都初始化轮播
+    function showNote(key, el) {
+      document.getElementById('note-detail').innerHTML = NOTES[key];
+      document.querySelectorAll('.note-list li').forEach(li => li.classList.remove('active'));
+      if (el) el.classList.add('active');
+      if (key === 'welcome') { setTimeout(() => slideCarousel(0), 50); } // 重置轮播位置
+    }
+    window.onload = function () {
+      document.getElementById('note-detail').innerHTML = NOTES['welcome'];
+      setTimeout(() => slideCarousel(0), 50); // 首次也初始化
+    }
   </script>
 </body>
+
 </html>
