@@ -124,5 +124,115 @@ const NOTES = {
     <hr/>
   </div>
 </article>
-`
-};
+`,
+  'largest-rectangle': `
+<article id="1ec12425-87fb-8030-a5f3-eec48da3d558" class="page sans">
+  <header>
+    <h1 class="page-title"><strong>柱状图中最大矩形面积</strong></h1>
+    
+    <h3><strong>题目描述：</strong></h3>
+    <p>给定 n 个非负整数，表示柱状图中各个柱子的高度，每个柱子彼此相邻，且宽度为 1。</p>
+    <p>求能够勾勒出来的矩形的<strong>最大面积</strong>。</p>
+    <hr/>
+    <h3><strong>算法思路：</strong></h3>
+    <p>使用<strong>单调栈</strong>来高效计算最大矩形面积。</p>
+    <h3><strong>1. 单调递增栈的性质：</strong></h3>
+    <ul>
+      <li><strong>栈中存放下标</strong>，栈内元素对应的高度<strong>单调递增</strong>。</li>
+    </ul>
+    <ul>
+      <li><strong>栈顶元素</strong>是<strong>当前高度序列中最小的有效高度</strong>。</li>
+    </ul>
+    <h3><strong>2. 计算最大面积的步骤：</strong></h3>
+    <ol>
+      <li>
+        <strong>初始化</strong>：
+        <ul>
+          <li>创建一个<strong>栈</strong>，用于存放柱子的下标。</li>
+        </ul>
+        <ul>
+          <li>在高度数组两端各加一个<strong>高度为 0</strong>的哨兵，防止越界。</li>
+        </ul>
+      </li>
+      <li>
+        <strong>遍历柱子</strong>：
+        <ul>
+          <li>当<strong>当前柱子的高度大于栈顶柱子的高度</strong>，入栈。</li>
+        </ul>
+        <ul>
+          <li>
+            当<strong>当前柱子的高度小于栈顶柱子的高度</strong>：
+            <ul>
+              <li>
+                <strong>出栈</strong>，计算以出栈柱子为<strong>高</strong>的矩形面积：
+                <ul>
+                  <li><strong>宽度</strong> = <code>当前下标 - 栈顶下标 - 1</code>。</li>
+                </ul>
+                <ul>
+                  <li><strong>面积</strong> = <code>高度 * 宽度</code>。</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        <ul>
+          <li>更新最大面积。</li>
+        </ul>
+      </li>
+      <li>
+        <strong>返回结果</strong>：
+        <ul>
+          <li>遍历完整个数组后，返回最大面积。</li>
+        </ul>
+      </li>
+    </ol>
+    <hr/>
+    <h3><strong>代码实现：</strong></h3>
+    <pre class="code"><code class="language-Java" style="white-space:pre-wrap;word-break:break-all">
+import java.util.Stack;
+
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        int n = heights.length;
+        int[] newHeights = new int[n + 2];
+        System.arraycopy(heights, 0, newHeights, 1, n);
+        newHeights[0] = newHeights[n + 1] = 0;
+
+        Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+        int maxArea = 0;
+
+        for (int i = 0; i &lt; newHeights.length; i++) {
+            while (!stack.isEmpty() &amp;&amp; newHeights[i] &lt; newHeights[stack.peek()]) {
+                int h = newHeights[stack.pop()];
+                int w = i - stack.peek() - 1;
+                maxArea = Math.max(maxArea, h * w);
+            }
+            stack.push(i);
+        }
+
+        return maxArea;
+    }
+}
+    </code></pre>
+    <hr/>
+    <h3><strong>复杂度分析：</strong></h3>
+    <ul>
+      <li><strong>时间复杂度：O(n)</strong>
+        <ul>
+          <li>每个柱子最多<strong>入栈和出栈一次</strong>。</li>
+        </ul>
+      </li>
+    </ul>
+    <ul>
+      <li><strong>空间复杂度：O(n)</strong>
+        <ul>
+          <li>额外空间主要用于<strong>栈</strong>。</li>
+        </ul>
+      </li>
+    </ul>
+    <hr/>
+  </div>
+</article>
+  `
+}
+
