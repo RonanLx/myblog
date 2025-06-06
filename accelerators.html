@@ -195,58 +195,64 @@
       background: #191921;
       border-radius: 12px;
       box-shadow: 0 2px 10px #0006;
-      padding: 12px 0;
-      width: 360px;
-      max-width: 90vw;
+      padding: 14px 0;
+      width: 420px;
+      max-width: 92vw;
       overflow: hidden;
-    }
-
-    .carousel-track {
-      display: flex;
-      width: 220px;
-      height: 150px;
-      align-items: center;
-      overflow: hidden;
-      position: relative;
-      transition: transform 0.4s;
-    }
-
-    .carousel-track img {
-      width: 220px;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 10px;
-      margin: 0 2px;
-      background: #222;
       user-select: none;
-      pointer-events: none;
     }
 
     .carousel-btn {
       background: none;
       border: none;
       color: #f5d0bd;
-      font-size: 1.8em;
-      padding: 0 14px;
+      font-size: 2em;
+      padding: 0 8px;
       cursor: pointer;
       user-select: none;
       outline: none;
       transition: color 0.2s;
+      z-index: 2;
     }
 
     .carousel-btn:hover {
       color: #ffd7b6;
     }
 
-    @media (max-width: 500px) {
+    .carousel-track {
+      display: flex;
+      align-items: center;
+      transition: transform 0.4s cubic-bezier(.57, .18, .25, 1.12);
+      width: 320px;
+      height: 200px;
+      position: relative;
+      touch-action: pan-x;
+      cursor: grab;
+      background: #222;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .carousel-track img {
+      width: 320px;
+      height: 200px;
+      object-fit: contain;
+      border-radius: 8px;
+      margin: 0;
+      pointer-events: none;
+      user-drag: none;
+      user-select: none;
+    }
+
+    @media (max-width: 600px) {
       .carousel {
-        width: 240px;
+        width: 98vw;
       }
 
       .carousel-track,
       .carousel-track img {
-        width: 120px;
-        height: 80px;
+        width: 180px;
+        height: 110px;
       }
     }
   </style>
@@ -302,24 +308,106 @@
       document.getElementById('note-detail').innerHTML = NOTES['welcome'];
     }
 
-    // 轮播参数
-    let carouselIndex = 0;
-    function slideCarousel(dir) {
-      const track = document.getElementById('carousel-track');
-      const imgs = track.querySelectorAll('img');
-      carouselIndex = (carouselIndex + dir + imgs.length) % imgs.length;
-      track.style.transform = `translateX(${-carouselIndex * imgs[0].offsetWidth}px)`;
+    // 折叠侧边栏
+    function toggleSidebar(type) {
+      const list = document.getElementById(type === 'nav' ? 'nav-list' : 'note-list');
+      const arrow = document.getElementById('arrow-' + type);
+      list.classList.toggle('collapsed');
+      arrow.classList.toggle('collapsed');
     }
-    // 每次切换到 welcome 都初始化轮播
+
+    // 笔记切换
     function showNote(key, el) {
       document.getElementById('note-detail').innerHTML = NOTES[key];
       document.querySelectorAll('.note-list li').forEach(li => li.classList.remove('active'));
       if (el) el.classList.add('active');
-      if (key === 'welcome') { setTimeout(() => slideCarousel(0), 50); } // 重置轮播位置
+      if (key === 'welcome') setTimeout(initCarousel, 60);
     }
+
+    // 默认显示 welcome，初始化轮播
     window.onload = function () {
       document.getElementById('note-detail').innerHTML = NOTES['welcome'];
-      setTimeout(() => slideCarousel(0), 50); // 首次也初始化
+      setTimeout(initCarousel, 60);
+    }
+
+    // 轮播功能(支持滑动/按钮)
+    let carouselIndex = 0, carouselImgs = [];
+    let isDown = false, startX = 0, moveX = 0;
+
+    function updateCarousel() {
+      const track = document.getElementById('carousel-track');
+      if (!track) return;
+      const width = track.offsetWidth;
+      track.style.transform = `translateX(${-carouselIndex * width}px)`;
+    }
+
+    function slideCarousel(dir) {
+      const track = document.getElementById('carousel-track');
+      if (!track) return;
+      carouselImgs = Array.from(track.querySelectorAll('img'));
+      carouselIndex = (carouselIndex + dir + carouselImgs.length) % carouselImgs.length;
+      updateCarousel();
+    }
+
+    function initCarousel() {
+      const track = document.getElementById('carousel-track');
+      if (!track) return;
+      carouselImgs = Array.from(track.querySelectorAll('img'));
+      carouselIndex = 0;
+      updateCarousel();
+
+      // 拖动/滑动事件
+      track.onmousedown = function (e) {
+        isDown = true;
+        startX = e.clientX;
+        moveX = 0;
+        track.style.cursor = 'grabbing';
+      };
+      track.onmousemove = function (e) {
+        if (!isDown) return;
+        moveX = e.clientX - startX;
+        track.style.transform = `translateX(${-carouselIndex * track.offsetWidth + moveX}px)`;
+      };
+      track.onmouseup = function (e) {
+        if (!isDown) return;
+        isDown = false;
+        track.style.cursor = 'grab';
+        if (Math.abs(moveX) > 60) {
+          slideCarousel(moveX < 0 ? 1 : -1);
+        } else {
+          updateCarousel();
+        }
+      };
+      track.onmouseleave = function (e) {
+        if (!isDown) return;
+        isDown = false;
+        track.style.cursor = 'grab';
+        updateCarousel();
+      };
+
+      // 兼容手机端
+      track.ontouchstart = function (e) {
+        if (!e.touches || !e.touches[0]) return;
+        isDown = true;
+        startX = e.touches[0].clientX;
+        moveX = 0;
+      };
+      track.ontouchmove = function (e) {
+        if (!isDown || !e.touches || !e.touches[0]) return;
+        moveX = e.touches[0].clientX - startX;
+        track.style.transform = `translateX(${-carouselIndex * track.offsetWidth + moveX}px)`;
+      };
+      track.ontouchend = function (e) {
+        if (!isDown) return;
+        isDown = false;
+        if (Math.abs(moveX) > 40) {
+          slideCarousel(moveX < 0 ? 1 : -1);
+        } else {
+          updateCarousel();
+        }
+      };
+
+      window.addEventListener('resize', updateCarousel);
     }
   </script>
 </body>
