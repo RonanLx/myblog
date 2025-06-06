@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
   <meta charset="UTF-8" />
   <title>Accelerators</title>
@@ -24,6 +23,8 @@
       height: 100vh;
       box-sizing: border-box;
       border-right: 1px solid #222;
+      display: flex;
+      flex-direction: column;
     }
 
     .sidebar h2 {
@@ -35,13 +36,13 @@
       letter-spacing: 2px;
     }
 
-    .note-list {
+    .sidebar-nav, .note-list {
       list-style: none;
       padding: 0 16px;
-      margin: 0;
+      margin: 0 0 18px 0;
     }
 
-    .note-list li {
+    .sidebar-nav li, .note-list li {
       padding: 12px 16px;
       margin-bottom: 8px;
       border-radius: 8px;
@@ -49,10 +50,19 @@
       transition: background 0.2s;
       color: #dedede;
       font-size: 1em;
+      user-select: none;
     }
 
-    .note-list li.active,
-    .note-list li:hover {
+    .sidebar-nav li a {
+      color: inherit;
+      text-decoration: none;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .sidebar-nav li.active, .sidebar-nav li:hover, .sidebar-nav li a.active,
+    .note-list li.active, .note-list li:hover {
       background: #282832;
       color: #f5d0bd;
     }
@@ -65,7 +75,6 @@
       overflow-x: auto;
     }
 
-    /* 适配 Notion 导出正文样式 */
     .main-content article {
       background: #232329;
       border-radius: 14px;
@@ -130,27 +139,25 @@
     }
 
     @media (max-width: 800px) {
-      .sidebar {
-        display: none;
-      }
-
-      .main-content {
-        padding: 12px 4vw;
-      }
-
-      .main-content article {
-        padding: 12px 2vw;
-      }
+      .sidebar { display: none; }
+      .main-content { padding: 12px 4vw; }
+      .main-content article { padding: 12px 2vw; }
     }
   </style>
 </head>
-
 <body>
   <nav class="sidebar">
+    <h2>导航</h2>
+    <ul class="sidebar-nav">
+      <li><a href="index.html">🏠 主页</a></li>
+      <li><a href="blog.html">📝 博客</a></li>
+      <li><a href="about.html">👤 关于</a></li>
+      <li><a href="mailto:lissblisslx@gmail.com">✉️ 联系</a></li>
+    </ul>
     <h2>学习笔记</h2>
     <ul class="note-list">
       <li class="active" onclick="showNote('word-chain', this)">单词接龙</li>
-      <li class="active" onclick="showNote('largest-rectangle', this)">柱状图中最大矩形面积</li>
+      <li onclick="showNote('largest-rectangle', this)">柱状图中最大矩形面积</li>
       <!-- 更多笔记添加在这里 -->
     </ul>
   </nav>
@@ -170,5 +177,4 @@
     }
   </script>
 </body>
-
 </html>
