@@ -1,4 +1,25 @@
 const NOTES = {
+  welcome: `
+  <article>
+    <h1>🌟 欢迎来到 Ronan_JoJo 的学习世界！ 🌟</h1>
+    <p>这里记录了各类算法、编程与学习心得。请选择左侧笔记进行浏览。</p>
+    <div class="carousel-container">
+      <div class="carousel" id="welcome-carousel">
+        <button class="carousel-btn left" onclick="slideCarousel(-1)">&#8592;</button>
+        <div class="carousel-track" id="carousel-track">
+          <img src="./img/demo1.jpg" alt="图片1">
+          <img src="./img/demo2.jpg" alt="图片2">
+          <img src="./img/demo3.png" alt="图片3">
+          <img src="./img/demo4.png" alt="图片4">
+          <!-- 可继续添加图片，只需放在 img 目录下，并在此添加 <img src="..."> -->
+        </div>
+        <button class="carousel-btn right" onclick="slideCarousel(1)">&#8594;</button>
+      </div>
+    </div>
+    <hr>
+    <p>本页面持续优化中，欢迎交流指正！</p>
+  </article>
+`,
   'word-chain': `
 <article id="1f712425-87fb-809a-b9b7-ccbd9cf18869" class="page sans">
   <header>
@@ -129,7 +150,6 @@ const NOTES = {
 <article id="1ec12425-87fb-8030-a5f3-eec48da3d558" class="page sans">
   <header>
     <h1 class="page-title"><strong>柱状图中最大矩形面积</strong></h1>
-    
     <h3><strong>题目描述：</strong></h3>
     <p>给定 n 个非负整数，表示柱状图中各个柱子的高度，每个柱子彼此相邻，且宽度为 1。</p>
     <p>求能够勾勒出来的矩形的<strong>最大面积</strong>。</p>

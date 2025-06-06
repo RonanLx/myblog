@@ -27,19 +27,44 @@
       flex-direction: column;
     }
 
+    .sidebar-section {
+      margin-bottom: 18px;
+    }
+
     .sidebar h2 {
       font-size: 1.1em;
       color: #f5d0bd;
       padding-left: 32px;
-      margin: 0 0 18px 0;
+      margin: 0 0 10px 0;
       font-weight: bold;
       letter-spacing: 2px;
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .arrow {
+      display: inline-block;
+      width: 18px;
+      margin-right: 6px;
+      transition: transform 0.2s;
+      font-size: 1.1em;
+    }
+
+    .arrow.collapsed {
+      transform: rotate(-90deg);
+    }
+
+    .collapsed {
+      display: none;
     }
 
     .sidebar-nav, .note-list {
       list-style: none;
       padding: 0 16px;
-      margin: 0 0 18px 0;
+      margin: 0 0 8px 0;
+      transition: all 0.2s;
     }
 
     .sidebar-nav li, .note-list li {
@@ -147,33 +172,52 @@
 </head>
 <body>
   <nav class="sidebar">
-    <h2>导航</h2>
-    <ul class="sidebar-nav">
-      <li><a href="index.html">🏠 主页</a></li>
-      <li><a href="blog.html">📝 博客</a></li>
-      <li><a href="about.html">👤 关于</a></li>
-      <li><a href="mailto:lissblisslx@gmail.com">✉️ 联系</a></li>
-    </ul>
-    <h2>学习笔记</h2>
-    <ul class="note-list">
-      <li class="active" onclick="showNote('word-chain', this)">单词接龙</li>
-      <li onclick="showNote('largest-rectangle', this)">柱状图中最大矩形面积</li>
-      <!-- 更多笔记添加在这里 -->
-    </ul>
+    <div class="sidebar-section">
+      <h2 onclick="toggleSidebar('nav')">
+        <span class="arrow" id="arrow-nav">▼</span> 导航
+      </h2>
+      <ul class="sidebar-nav" id="nav-list">
+        <li><a href="index.html">🏠 主页</a></li>
+        <li><a href="blog.html">📝 博客</a></li>
+        <li><a href="about.html">👤 关于</a></li>
+        <li><a href="mailto:lissblisslx@gmail.com">✉️ 联系</a></li>
+      </ul>
+    </div>
+    <div class="sidebar-section">
+      <h2 onclick="toggleSidebar('note')">
+        <span class="arrow" id="arrow-note">▼</span> 学习笔记
+      </h2>
+      <ul class="note-list" id="note-list">
+        <li onclick="showNote('word-chain', this)">单词接龙</li>
+        <li onclick="showNote('largest-rectangle', this)">柱状图中最大矩形面积</li>
+        <!-- 更多笔记添加在这里 -->
+      </ul>
+    </div>
   </nav>
   <main class="main-content">
     <div id="note-detail"></div>
   </main>
   <script src="accelerators-notes.js"></script>
   <script>
+    // 折叠/展开侧边栏
+    function toggleSidebar(type) {
+      const list = document.getElementById(type === 'nav' ? 'nav-list' : 'note-list');
+      const arrow = document.getElementById('arrow-' + type);
+      list.classList.toggle('collapsed');
+      arrow.classList.toggle('collapsed');
+    }
+
+    // 切换笔记内容
     function showNote(key, el) {
       document.getElementById('note-detail').innerHTML = NOTES[key];
-      // 切换高亮
+      // 切换高亮，仅对学习笔记部分
       document.querySelectorAll('.note-list li').forEach(li => li.classList.remove('active'));
       if (el) el.classList.add('active');
     }
+
+    // 默认加载欢迎页（在 accelerators-notes.js 里确保有 NOTES['welcome']）
     window.onload = function () {
-      showNote('word-chain', document.querySelector('.note-list li'));
+      document.getElementById('note-detail').innerHTML = NOTES['welcome'];
     }
   </script>
 </body>
