@@ -3,20 +3,6 @@ const NOTES = {
   <article>
     <h1>🌟 欢迎来到 Ronan_JoJo 的学习世界！ 🌟</h1>
     <p>这里记录了各类算法、编程与学习心得。请选择左侧笔记进行浏览。</p>
-    <div class="carousel-container">
-      <div class="carousel" id="welcome-carousel">
-        <button class="carousel-btn left" onclick="slideCarousel(-1)">&#8592;</button>
-        <div class="carousel-track" id="carousel-track">
-          <img src="./img/demo1.jpg" alt="图片1">
-          <img src="./img/demo2.jpg" alt="图片2">
-          <img src="./img/demo3.png" alt="图片3">
-          <img src="./img/demo4.png" alt="图片4">
-          <!-- 可继续添加图片，只需放在 img 目录下，并在此添加 <img src="..."> -->
-        </div>
-        <button class="carousel-btn right" onclick="slideCarousel(1)">&#8594;</button>
-      </div>
-    </div>
-    <hr>
     <p>本页面持续优化中，欢迎交流指正！</p>
   </article>
 `,
