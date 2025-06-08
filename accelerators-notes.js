@@ -605,6 +605,367 @@ class Solution {
    └─ 指令锁定
   </code></pre>
 </article>
+`,
+  'java-thinking-in-java': `
+  <article>
+    <h1>《Java 编程思想》读书随记｜比起教代码，它更像在教“思考”</h1>
+    <p>最近我认真读完了《Java 编程思想》（<em>Thinking in Java</em>），作者是 <strong>Bruce Eckel</strong>，一位写 C++ 出身的大佬。</p>
+    <p>一开始我以为这只是另一本 Java 教程，结果读下来发现：<strong>它讲的不只是“代码”，更多是在教你怎么“用脑子”去理解 Java 这个语言。</strong></p>
+    <hr/>
+    <h2>为什么我会看这本书？（其实是为了快速睡觉来着）</h2>
+    <h3>1. 它不光教你怎么写，还教你“为啥要这么写”</h3>
+    <p>很多入门书讲得很“工具人”，比如直接告诉你：</p>
+    <blockquote>这行代码是干嘛的，照着写就行了。</blockquote>
+    <p>但这本书会追问你：</p>
+    <ul>
+      <li>为什么 Java 要这么设计？</li>
+      <li>为什么不像 C++ 一样搞指针？</li>
+      <li>为啥构造器不能返回值？</li>
+      <li>为什么垃圾回收是必须的？</li>
+    </ul>
+    <p>如果你和我一样，经常对语言背后的“逻辑”感兴趣，那你会觉得这书讲得特别透，甚至有点“哲学”。</p>
+
+    <h3>2. 例子不复杂，但恰到好处</h3>
+    <p>代码示例都不长，一屏能看完，但每一个都点到了关键。比如讲多态的时候，他用“乐器”这个例子贯穿始终，把抽象类、向上转型、接口这些概念都串起来了，超级清楚。</p>
+
+    <h3>3. 面向对象这部分讲得特别细</h3>
+    <p>如果你是培训班出来的，可能只会背“封装、继承、多态”。但这本书会告诉你这些词到底意味着什么、能怎么用来解决问题。接口、组合、设计模式这些也都讲得很系统。</p>
+
+    <hr/>
+    <h2>哪些章节我觉得特别有意思？</h2>
+    <ul>
+      <li><strong>多线程：</strong>讲得很清楚，尤其是 <code>wait()</code> / <code>notify()</code> 和线程死锁的例子，生动又好懂。</li>
+      <li><strong>异常处理：</strong>以前觉得 try-catch 很烦，看完才知道这是在“强制”你写更安全的代码。</li>
+      <li><strong>容器类：</strong>以前只知道用 <code>ArrayList</code>，读完才知道原来 <code>Vector</code> 和 <code>Hashtable</code> 是线程安全的老家伙。</li>
+    </ul>
+
+    <hr/>
+    <h2>Java 和 C++ 有啥不一样？</h2>
+    <p>作者是 C++ 出身，所以书里经常把 Java 和 C++ 做对比。我总结了一张表：</p>
+    <table>
+      <thead>
+        <tr><th>特性</th><th>Java</th><th>C++</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>指针</td><td>没有，只有“安全引用”</td><td>有裸指针，容易炸</td></tr>
+        <tr><td>内存回收</td><td>自动垃圾回收</td><td>要手动释放</td></tr>
+        <tr><td>多继承</td><td>不支持，用接口代替</td><td>支持，但容易出菱形继承问题</td></tr>
+        <tr><td>运算符重载</td><td>基本没有</td><td>支持重载，但容易滥用</td></tr>
+      </tbody>
+    </table>
+    <p>说白了，Java 像是“帮开发者规避坑的语言”，限制多一些，但也更适合做团队协作、大项目。</p>
+
+    <hr/>
+    <h2>我的收获总结</h2>
+    <ul>
+      <li>“万物皆对象”不只是口号，而是 Java 的设计核心。</li>
+      <li>构造器、继承、多态这些概念终于不再只是术语，而是能实际推理和使用的东西。</li>
+      <li>从 Java 的设计哲学出发，我也开始更能理解 Python、Go 等语言的思路了。</li>
+      <li>写代码，不只是用工具，更是理解工具为什么长这样。</li>
+    </ul>
+
+    <hr/>
+    <h2>阅读建议</h2>
+    <ul>
+      <li>适合作为睡前读物，很安神 (￣o￣) . z Z</li>
+      <li>不要硬啃一整本，分阶段读效果更好</li>
+      <li>强烈建议边读边敲，配合书末的练习题理解更牢</li>
+      <li>刚学完 Java 语法？这本书能帮你“打地基”</li>
+      <li>适合静下心的阅读时间，不适合考前突击</li>
+    </ul>
+  </article>
+`,
+  'tree-structure': `
+  <article>
+    <h1>数据结构笔记：二叉树、红黑树、B树、B+树</h1>
+    
+    <h2>一、二叉树（Binary Tree）</h2>
+    <p>每个节点最多有两个子节点。是最基础的树结构，很多高级树都由它演化而来。</p>
+    <ul>
+      <li><strong>满二叉树</strong>：所有非叶节点都有两个孩子，叶子都在同一层。</li>
+      <li><strong>完全二叉树</strong>：只允许最底层不满，且从左往右填充。</li>
+      <li><strong>二叉搜索树（BST）</strong>：左子树 &lt; 根 &lt; 右子树。</li>
+      <li><strong>平衡二叉树（AVL）</strong>：左右子树高度差不超过 1。</li>
+    </ul>
+    <p><strong>时间复杂度（平均）：</strong> 查找/插入/删除 = O(log n)，最坏 O(n)。</p>
+
+    <h2>二、红黑树（Red-Black Tree）</h2>
+    <p>一种<strong>自平衡</strong>的二叉搜索树，每个节点有“红”或“黑”两种颜色。</p>
+    <ul>
+      <li>根节点是黑色</li>
+      <li>红色节点不能连续</li>
+      <li>从任意节点到叶子路径的黑色节点数相等</li>
+      <li>插入和删除通过<strong>旋转+变色</strong>维持平衡</li>
+    </ul>
+    <p><strong>应用：</strong> TreeMap、TreeSet、Linux 调度器、Java 集合框架等。</p>
+
+    <h2>三、B树（B-Tree）</h2>
+    <p>一种<strong>多路平衡搜索树</strong>，用于减少磁盘 IO 的高阶结构，适合大规模索引场景。</p>
+    <ul>
+      <li>M 阶 B 树，每个节点最多有 M 个子节点</li>
+      <li>关键字分布在所有节点中</li>
+      <li>插入/删除时可能发生<strong>分裂或合并</strong></li>
+    </ul>
+    <p><strong>应用：</strong> 数据库索引（如 MySQL InnoDB）、文件系统。</p>
+
+    <h2>四、B+树（B+ Tree）</h2>
+    <p>B树的改进版本，是多数数据库（如 MySQL）使用的默认索引结构。</p>
+    <ul>
+      <li>所有数据只存在于<strong>叶子节点</strong></li>
+      <li>叶子节点之间通过<strong>链表连接</strong>，支持范围查询</li>
+      <li>内部节点只存索引，不存数据</li>
+    </ul>
+    <p><strong>优点：</strong> 查询更稳定，范围扫描性能极强，支持海量数据。</p>
+
+    <h2>五、四者对比总结</h2>
+    <table>
+      <thead>
+        <tr><th>结构</th><th>特点</th><th>查询效率</th><th>应用场景</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>二叉搜索树</td><td>左右分支，可能失衡</td><td>O(log n) ~ O(n)</td><td>算法基础</td></tr>
+        <tr><td>红黑树</td><td>自平衡 BST，颜色控制</td><td>O(log n)</td><td>集合类/内核结构</td></tr>
+        <tr><td>B树</td><td>多叉搜索树，关键字在所有节点</td><td>O(log n)</td><td>数据库索引</td></tr>
+        <tr><td>B+树</td><td>叶子存数据，链表连接</td><td>O(log n)</td><td>数据库主流结构</td></tr>
+      </tbody>
+    </table>
+
+    <h2>六、记忆导图结构</h2>
+    <pre><code>
+数据结构（树）
+├── 二叉树
+│   ├── 满 / 完全 / 搜索 / 平衡树
+├── 红黑树（自平衡BST）
+├── B树（多路搜索树）
+├── B+树（叶子链表、只在叶子存数据）
+    </code></pre>
+
+    <h2>小结</h2>
+    <ul>
+      <li>红黑树适合内存场景（集合、调度、编译器）</li>
+      <li>B/B+树适合磁盘场景（数据库、文件系统）</li>
+      <li>B+树是数据库索引中的主力结构，必须掌握</li>
+    </ul>
+  </article>
+`,
+'dp-notes': `
+<article>
+  <h1>动态规划（Dynamic Programming）</h1>
+
+  <h2>一、什么是动态规划？</h2>
+  <p>动态规划（Dynamic Programming，简称 DP）是一种将原问题分解为子问题，并通过<strong>保存子问题结果</strong>来避免重复计算的算法思想。</p>
+  <p>适用于<strong>具有重叠子问题 + 最优子结构</strong>的问题。</p>
+
+  <h3>关键特征</h3>
+  <ul>
+    <li><strong>最优子结构：</strong>原问题的最优解依赖于子问题的最优解。</li>
+    <li><strong>重叠子问题：</strong>子问题重复出现，可缓存结果避免重复计算。</li>
+    <li><strong>状态转移方程：</strong>通过状态表示问题，用转移方程描述解法。</li>
+  </ul>
+
+  <h3>与分治的区别</h3>
+  <p>分治：每个子问题独立求解；DP：子问题有重叠，适合用缓存优化。</p>
+
+  <hr/>
+
+  <h2>二、动态规划的解题步骤</h2>
+  <ol>
+    <li><strong>确定状态：</strong>明确数组 dp[i] 的含义。</li>
+    <li><strong>找出转移方程：</strong>通过分析可能的选择构造递推公式。</li>
+    <li><strong>设置初始状态：</strong>给 dp 数组设置起始值（边界条件）。</li>
+    <li><strong>确定遍历顺序：</strong>一般从小到大递推，有时需倒序。</li>
+    <li><strong>返回最终答案：</strong>根据题意选择返回 dp 的哪个值。</li>
+  </ol>
+
+  <hr/>
+
+  <h2>三、常见动态规划分类题型</h2>
+
+  <h3>1️⃣ 一维 DP</h3>
+  <ul>
+    <li>斐波那契数列：<code>dp[i] = dp[i - 1] + dp[i - 2]</code></li>
+    <li>爬楼梯问题</li>
+    <li>整数拆分、打家劫舍、跳跃游戏</li>
+  </ul>
+
+  <h3>2️⃣ 二维 DP</h3>
+  <ul>
+    <li>编辑距离</li>
+    <li>最长公共子序列/子串</li>
+    <li>背包问题</li>
+    <li>矩阵路径问题</li>
+  </ul>
+
+  <h3>3️⃣ 状态压缩 DP</h3>
+  <ul>
+    <li>状压背包（位运算 + 动态规划）</li>
+    <li>旅行商问题（TSP）</li>
+  </ul>
+
+  <h3>4️⃣ 区间 DP</h3>
+  <ul>
+    <li>戳气球</li>
+    <li>石子合并</li>
+    <li>矩阵连乘</li>
+  </ul>
+
+  <h3>5️⃣ 树形 DP</h3>
+  <ul>
+    <li>以节点为根的子树状态维护</li>
+    <li>换根 DP</li>
+  </ul>
+
+  <h3>6️⃣ 记忆化搜索</h3>
+  <p>使用递归 + 哈希表 / 数组缓存结果，适合题目“从顶向下”，代码简洁。</p>
+
+  <hr/>
+
+  <h2>四、常用动态规划模板</h2>
+
+  <h3>一维 DP（以爬楼梯为例）</h3>
+  <pre><code class="language-java">
+int climbStairs(int n) {
+    if (n <= 2) return n;
+    int[] dp = new int[n + 1];
+    dp[1] = 1; dp[2] = 2;
+    for (int i = 3; i <= n; i++) {
+        dp[i] = dp[i - 1] + dp[i - 2];
+    }
+    return dp[n];
+}
+  </code></pre>
+
+  <h3>0-1 背包问题</h3>
+  <pre><code class="language-java">
+int n = weights.length, W = bagCapacity;
+int[] dp = new int[W + 1];
+for (int i = 0; i < n; i++) {
+    for (int j = W; j >= weights[i]; j--) {
+        dp[j] = Math.max(dp[j], dp[j - weights[i]] + values[i]);
+    }
+}
+  </code></pre>
+
+  <h3>编辑距离</h3>
+  <pre><code class="language-java">
+int m = word1.length(), n = word2.length();
+int[][] dp = new int[m + 1][n + 1];
+for (int i = 0; i <= m; i++) dp[i][0] = i;
+for (int j = 0; j <= n; j++) dp[0][j] = j;
+
+for (int i = 1; i <= m; i++) {
+    for (int j = 1; j <= n; j++) {
+        if (word1.charAt(i - 1) == word2.charAt(j - 1)) {
+            dp[i][j] = dp[i - 1][j - 1];
+        } else {
+            dp[i][j] = Math.min(dp[i - 1][j], Math.min(dp[i][j - 1], dp[i - 1][j - 1])) + 1;
+        }
+    }
+}
+  </code></pre>
+
+  <hr/>
+
+  <h2>思维导图结构建议</h2>
+  <pre><code>
+动态规划
+├── 一维 DP（打家劫舍、爬楼梯）
+├── 二维 DP（编辑距离、LCS）
+├── 状压 DP（旅行商、集合覆盖）
+├── 区间 DP（戳气球、石子合并）
+├── 树形 DP（换根、以子树为状态）
+├── 记忆化搜索（DFS + 备忘录）
+  </code></pre>
+
+  <hr/>
+</article>
+`,
+'stock-max-2-transactions': `
+<article>
+  <h1>最多两笔交易的股票买卖问题</h1>
+
+  <h2>题目概述</h2>
+  <ul>
+    <li>给定一个整数数组 <code>prices</code>，其中 <code>prices[i]</code> 表示第 <code>i</code> 天的股票价格。</li>
+    <li>最多只能完成<strong>两笔不重叠的交易</strong>（一次买入+一次卖出）。</li>
+    <li>求可获得的最大利润。</li>
+  </ul>
+
+  <h2>解题思路</h2>
+
+  <h3>1️⃣ 状态定义</h3>
+  <ul>
+    <li><code>dp[i][k][0]</code>：第 <code>i</code> 天，最多还能进行 <code>k</code> 次交易，<strong>当前未持股</strong> 的最大利润。</li>
+    <li><code>dp[i][k][1]</code>：第 <code>i</code> 天，最多还能进行 <code>k</code> 次交易，<strong>当前持股</strong> 的最大利润。</li>
+  </ul>
+
+  <h3>2️⃣ 状态转移方程</h3>
+  <ul>
+    <li>不持股：<code>dp[i][k][0] = max(dp[i-1][k][0], dp[i-1][k][1] + prices[i])</code></li>
+    <li>持有股：<code>dp[i][k][1] = max(dp[i-1][k][1], dp[i-1][k-1][0] - prices[i])</code></li>
+  </ul>
+
+  <h3>3️⃣ 初始化</h3>
+  <ul>
+    <li><code>dp[0][k][0] = 0</code>（第0天未持股）</li>
+    <li><code>dp[0][k][1] = -prices[0]</code>（第0天买入）</li>
+  </ul>
+
+  <h3>4️⃣ 最终答案</h3>
+  <p>返回 <code>dp[n - 1][2][0]</code>，表示最后一天，最多进行两笔交易且不持股的最大利润。</p>
+
+  <h2>思维导图结构</h2>
+  <pre><code>
+最多两笔交易股票买卖
+├─ 状态定义：dp[i][k][0/1]
+│    ├─ i: 第i天，k: 剩余交易次数
+│    ├─ 0: 未持股，1: 持股
+├─ 状态转移
+│    ├─ 未持股: max(昨天未持股, 昨天持股+今天卖)
+│    └─ 持股: max(昨天持股, 昨天未持股-今天买入)
+├─ 初始化
+│    ├─ dp[0][k][0]=0
+│    └─ dp[0][k][1]=-prices[0]
+├─ 最终答案：dp[n-1][2][0]
+└─ 时间复杂度：O(n)
+  </code></pre>
+
+  <h2>Java 代码实现</h2>
+  <pre><code class="language-java">
+class Solution {
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        if (n == 0) return 0;
+        int[][][] dp = new int[n][3][2];
+        for (int k = 0; k <= 2; k++) {
+            dp[0][k][0] = 0;
+            dp[0][k][1] = -prices[0];
+        }
+        for (int i = 1; i < n; i++) {
+            for (int k = 2; k > 0; k--) {
+                dp[i][k][0] = Math.max(dp[i-1][k][0], dp[i-1][k][1] + prices[i]);
+                dp[i][k][1] = Math.max(dp[i-1][k][1], dp[i-1][k-1][0] - prices[i]);
+            }
+        }
+        return dp[n-1][2][0];
+    }
+}
+  </code></pre>
+
+  <h2>复杂度分析</h2>
+  <ul>
+    <li><strong>时间复杂度：</strong>O(n)，k 固定为 2</li>
+    <li><strong>空间复杂度：</strong>O(n)，可优化为 O(1)</li>
+  </ul>
+
+  <h2>边界情况</h2>
+  <ul>
+    <li>价格单调递减：利润为 0</li>
+    <li>价格波动仅允许一次交易：等价于最大差值</li>
+    <li>两次高低点组合：需注意交易间不能重叠</li>
+  </ul>
+</article>
 `
+
 }
 
