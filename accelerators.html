@@ -189,9 +189,9 @@
   <nav class="sidebar">
     <div class="sidebar-section">
       <h2 onclick="toggleSidebar('nav')">
-        <span class="arrow" id="arrow-nav">▼</span> 导航
+        <span class="arrow collapsed" id="arrow-nav">▼</span> 导航
       </h2>
-      <ul class="sidebar-nav" id="nav-list">
+      <ul class="sidebar-nav collapsed" id="nav-list">
         <li><a href="index.html">🏠 主页</a></li>
         <li><a href="blog.html">📝 博客</a></li>
         <li><a href="about.html">👤 关于</a></li>
@@ -200,9 +200,10 @@
     </div>
     <div class="sidebar-section">
       <h2 onclick="toggleSidebar('note')">
-        <span class="arrow" id="arrow-note">▼</span> 学习笔记
+        <span class="arrow collapsed" id="arrow-note">▼</span> 学习笔记
       </h2>
-      <ul class="note-list" id="note-list">
+      <ul class="note-list collapsed" id="note-list">
+        <li onclick="showNote('concurrency-overview', this)">并发编程与底层并发详解</li>
         <li onclick="showNote('clear-stars', this)">删除星号以后的字典序最小的字符串</li>
         <li onclick="showNote('largest-rectangle', this)">柱状图中最大矩形面积</li>
         <li onclick="showNote('word-chain', this)">单词接龙</li>
@@ -211,12 +212,13 @@
       </ul>
     </div>
   </nav>
+
   <main class="main-content">
     <div id="note-detail"></div>
   </main>
+
   <script src="accelerators-notes.js"></script>
   <script>
-    // 折叠/展开侧边栏
     function toggleSidebar(type) {
       const list = document.getElementById(type === 'nav' ? 'nav-list' : 'note-list');
       const arrow = document.getElementById('arrow-' + type);
@@ -224,28 +226,6 @@
       arrow.classList.toggle('collapsed');
     }
 
-    // 切换笔记内容
-    function showNote(key, el) {
-      document.getElementById('note-detail').innerHTML = NOTES[key];
-      // 切换高亮，仅对学习笔记部分
-      document.querySelectorAll('.note-list li').forEach(li => li.classList.remove('active'));
-      if (el) el.classList.add('active');
-    }
-
-    // 默认加载欢迎页（在 accelerators-notes.js 里确保有 NOTES['welcome']）
-    window.onload = function () {
-      document.getElementById('note-detail').innerHTML = NOTES['welcome'];
-    }
-
-    // 折叠侧边栏
-    function toggleSidebar(type) {
-      const list = document.getElementById(type === 'nav' ? 'nav-list' : 'note-list');
-      const arrow = document.getElementById('arrow-' + type);
-      list.classList.toggle('collapsed');
-      arrow.classList.toggle('collapsed');
-    }
-
-    // 笔记切换
     function showNote(key, el) {
       document.getElementById('note-detail').innerHTML = NOTES[key];
       document.querySelectorAll('.note-list li').forEach(li => li.classList.remove('active'));
@@ -253,12 +233,10 @@
       if (key === 'welcome') setTimeout(initCarousel, 60);
     }
 
-    // 默认显示 welcome，初始化轮播
     window.onload = function () {
       document.getElementById('note-detail').innerHTML = NOTES['welcome'];
       setTimeout(initCarousel, 60);
     }
-
   </script>
 </body>
 

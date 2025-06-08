@@ -1,5 +1,5 @@
 const NOTES = {
-  welcome: `
+  'welcome': `
   <article>
     <h1>🌟 欢迎来到 Ronan_JoJo 的学习世界！ 🌟</h1>
     <p>这里记录了各类算法、编程与学习心得。请选择左侧笔记进行浏览。</p>
@@ -435,6 +435,176 @@ class Solution {
     <hr/>
   </div>
 </article>
-  `
+  `,
+  'concurrency-overview': `
+<article>
+  <h1>并发编程与底层并发详解</h1>
+
+  <h2>一、并发编程 (Concurrent Programming)</h2>
+  <h3>定义：</h3>
+  <p><strong>并发编程</strong>指的是在程序执行过程中，多个任务或线程可以同时或交替执行，以提高程序运行效率和响应能力。</p>
+
+  <h3>为什么使用并发？</h3>
+  <ul>
+    <li>提升系统吞吐量。</li>
+    <li>提高资源利用率。</li>
+    <li>增强用户体验（例如界面响应速度更快）。</li>
+  </ul>
+
+  <h3>常见模型：</h3>
+  <ul>
+    <li>多线程模型（Thread-based concurrency）</li>
+    <li>异步编程模型（Async programming）</li>
+    <li>Actor模型</li>
+    <li>生产者-消费者模式</li>
+  </ul>
+
+  <h3>并发问题：</h3>
+  <ul>
+    <li><strong>竞态条件</strong>（Race Conditions）：共享资源访问冲突。</li>
+    <li><strong>死锁</strong>（Deadlock）：线程互相等待，程序停滞。</li>
+    <li><strong>饥饿</strong>（Starvation）：线程长期得不到资源。</li>
+  </ul>
+
+  <h3>解决机制：</h3>
+  <ul>
+    <li>锁（Mutex, Read-Write Lock, Spin Lock）</li>
+    <li>同步原语（Semaphore, Condition, Barrier）</li>
+    <li>原子操作（Atomic Operations）</li>
+    <li>无锁数据结构（Lock-free）</li>
+  </ul>
+
+  <hr/>
+
+  <h2>二、底层并发 (Low-level Concurrency)</h2>
+  <h3>定义：</h3>
+  <p>关注 CPU 层级的原子性、内存一致性和有序性等底层保障机制。</p>
+
+  <h3>核心概念：</h3>
+  <ul>
+    <li><strong>原子性</strong>：操作不可中断（如 CAS 指令）</li>
+    <li><strong>可见性</strong>：修改能否被其他线程感知（MESI 协议）</li>
+    <li><strong>有序性</strong>：防止 CPU 指令乱序执行带来的逻辑错误</li>
+  </ul>
+
+  <h3>内存模型（Memory Model）：</h3>
+  <p>Java内存模型（JMM）中：</p>
+  <ul>
+    <li><code>volatile</code> 保证可见性与禁止指令重排</li>
+    <li><code>synchronized</code> 保证原子性与可见性</li>
+  </ul>
+
+  <h3>底层机制：</h3>
+  <ul>
+    <li><strong>CAS</strong>（Compare-And-Swap）操作</li>
+    <li><strong>内存屏障</strong>（Memory Barriers）</li>
+    <li><strong>指令锁定</strong>（如 x86 的 <code>lock</code> 前缀）</li>
+  </ul>
+
+  <pre><code>bool CAS(int *addr, int expected, int new_value) {
+    if (*addr == expected) {
+        *addr = new_value;
+        return true;
+    }
+    return false;
+}</code></pre>
+
+  <hr/>
+
+  <h2>三、并发工具与库支持</h2>
+  <h3>Java 示例：</h3>
+  <ul>
+    <li><code>ExecutorService</code></li>
+    <li><code>CompletableFuture</code></li>
+    <li><code>CountDownLatch</code></li>
+    <li><code>CyclicBarrier</code></li>
+    <li><code>ConcurrentHashMap</code></li>
+  </ul>
+
+  <h3>底层库：</h3>
+  <ul>
+    <li>JUC（Java Util Concurrent）</li>
+    <li>pthread（POSIX Threads）</li>
+  </ul>
+
+  <hr/>
+
+  <h2>四、并发编程性能优化技巧</h2>
+  <ul>
+    <li>减小锁粒度</li>
+    <li>使用读写锁提升并发性能</li>
+    <li>避免过度共享状态</li>
+    <li>使用不可变对象</li>
+  </ul>
+
+  <hr/>
+
+  <h2>五、术语汇总</h2>
+  <table>
+    <thead>
+      <tr><th>术语</th><th>解释</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Race Condition</td><td>线程并发修改共享资源导致数据不一致</td></tr>
+      <tr><td>Deadlock</td><td>互相持有资源造成永久等待</td></tr>
+      <tr><td>CAS</td><td>原子比较并交换</td></tr>
+      <tr><td>Memory Model</td><td>多线程读写内存的规则</td></tr>
+      <tr><td>Lock-free</td><td>不使用锁的并发编程方式</td></tr>
+      <tr><td>Thread-safe</td><td>多个线程安全地访问共享对象</td></tr>
+    </tbody>
+  </table>
+
+  <hr/>
+
+  <h2>六、最佳实践</h2>
+  <ul>
+    <li>优先使用线程池，不手动管理线程</li>
+    <li>使用高级抽象如并发集合、同步工具</li>
+    <li>保持代码简洁易测，避免同步逻辑复杂化</li>
+  </ul>
+
+  <hr/>
+
+  <h2>七、常见应用场景</h2>
+  <ul>
+    <li>高并发网络服务器</li>
+    <li>实时交易系统</li>
+    <li>数据库事务并发控制</li>
+  </ul>
+
+  <hr/>
+
+  <h2>总结图示</h2>
+  <pre><code>
+并发编程（Concurrent Programming）
+├─ 基本模型
+│  ├─ 多线程
+│  ├─ 异步模型
+│  └─ Actor模型
+├─ 问题
+│  ├─ 竞态条件
+│  ├─ 死锁
+│  └─ 饥饿
+└─ 控制机制
+   ├─ 锁 (Lock)
+   ├─ 原子操作
+   ├─ 无锁结构
+   └─ 同步原语
+
+底层并发（Low-level Concurrency）
+├─ 核心概念
+│  ├─ 原子性
+│  ├─ 可见性
+│  └─ 有序性
+├─ 内存模型
+│  ├─ Java内存模型 (JMM)
+│  └─ 硬件模型
+└─ 底层机制
+   ├─ CAS操作
+   ├─ 内存屏障
+   └─ 指令锁定
+  </code></pre>
+</article>
+`
 }
 
