@@ -6,6 +6,64 @@ const NOTES = {
     <p>本页面持续优化中，欢迎交流指正！</p>
   </article>
 `,
+  'lexical-order': `
+<article>
+  <h1> 字典序遍历（Lexical Order）</h1>
+
+  <h2> 一、题目描述</h2>
+  <p>给定一个整数 <code>n</code>，要求按字典序返回范围 <code>[1, n]</code> 内所有整数。</p>
+  <p> 你必须设计一个 <strong>时间复杂度为 O(n)</strong> 且使用 <strong>O(1) 额外空间</strong> 的算法。</p>
+
+  <h2> 二、解题思路</h2>
+  <p>这其实是<strong>十叉树的先序遍历</strong>问题：</p>
+  <ul>
+    <li>每个数字 <code>cur</code> 都可以扩展出下一级的子节点：<code>cur * 10, cur * 10 + 1, ..., cur * 10 + 9</code>（不能超过 n）</li>
+    <li>模拟先序遍历，优先尝试下钻（<code>cur *= 10</code>），其次尝试兄弟（<code>cur++</code>），最后必要时回溯到祖先。</li>
+  </ul>
+
+  <h3> 遍历策略</h3>
+  <ol>
+    <li><code>cur * 10 <= n</code>：优先往下进入下一层</li>
+    <li>否则如果 <code>cur % 10 != 9</code> 且 <code>cur + 1 <= n</code>：访问右兄弟</li>
+    <li>否则回退（<code>cur /= 10</code>），直到找到可以 +1 的位置</li>
+  </ol>
+
+  <h2> 三、Java 实现</h2>
+  <pre><code class="language-java">class Solution {
+    public List&lt;Integer&gt; lexicalOrder(int n) {
+        List&lt;Integer&gt; res = new ArrayList&lt;&gt;(n);
+        int cur = 1;
+        for (int i = 0; i &lt; n; i++) {
+            res.add(cur);
+            if (cur * 10 &lt;= n) {
+                cur *= 10;
+            } else if (cur % 10 != 9 && cur + 1 &lt;= n) {
+                cur++;
+            } else {
+                while ((cur / 10) > 0 && (cur % 10 == 9 || cur + 1 > n)) {
+                    cur /= 10;
+                }
+                cur++;
+            }
+        }
+        return res;
+    }
+}
+</code></pre>
+
+  <h2> 四、样例分析</h2>
+  <p><strong>示例 1：</strong>输入：<code>n = 13</code></p>
+  <p>输出：<code>[1,10,11,12,13,2,3,4,5,6,7,8,9]</code></p>
+
+  <h2> 五、复杂度分析</h2>
+  <ul>
+    <li> 时间复杂度：<code>O(n)</code>，每个数只遍历一次</li>
+    <li> 空间复杂度：<code>O(1)</code>，不使用额外数据结构</li>
+  </ul>
+
+  <hr/>
+</article>
+`,
   'clear-stars': `
     <article>
     <h2>删除星号以后的字典序最小的字符串</h2>
