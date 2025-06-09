@@ -965,7 +965,203 @@ class Solution {
     <li>两次高低点组合：需注意交易间不能重叠</li>
   </ul>
 </article>
-`
+`,
+ 'kth-lexical-number': `
+<article>
+  <h1>字典序第 k 小的数字</h1>
 
+  <h2>一、题目描述</h2>
+  <p>给定整数 <code>n</code> 和 <code>k</code>，返回 [1, n] 中字典序第 k 小的数字。</p>
+  
+  <pre><code>示例 1:
+输入: n = 13, k = 2
+输出: 10
+解释: 字典序：[1,10,11,12,13,2,3,4,5,6,7,8,9]
+
+示例 2:
+输入: n = 1, k = 1
+输出: 1</code></pre>
+
+  <hr/>
+
+  <h2>二、解题思路</h2>
+
+  <h3>1. 字典树结构</h3>
+  <p>将所有数字看作字典序遍历的 10 叉树：</p>
+  <ul>
+    <li>每个数字 prefix，子节点为 prefix*10 ~ prefix*10+9</li>
+    <li>遍历这棵树的前 k 个节点</li>
+  </ul>
+
+  <h3>2. 步进跳跃策略</h3>
+  <p>用一个函数 getCount(prefix, n) 表示在 [1, n] 范围内，以 prefix 为起点的所有字典序子节点个数。</p>
+
+  <p>算法策略如下：</p>
+  <ul>
+    <li>从 curr = 1 开始</li>
+    <li>若 getCount(curr, n) ≤ k：说明 k 在 curr 的兄弟节点中，curr++，k -= count</li>
+    <li>否则：说明 k 在 curr 的子树中，curr *= 10，k--</li>
+    <li>重复直到 k = 0，返回 curr</li>
+  </ul>
+
+  <hr/>
+
+  <h2>三、代码实现（JavaScript）</h2>
+  <pre><code class="language-js">var findKthNumber = function(n, k) {
+    let curr = 1;
+    k = k - 1;
+
+    while (k > 0) {
+        let steps = getSteps(n, curr, curr + 1);
+        if (steps <= k) {
+            curr += 1;
+            k -= steps;
+        } else {
+            curr *= 10;
+            k -= 1;
+        }
+    }
+    return curr;
+};
+
+function getSteps(n, curr, next) {
+    let steps = 0;
+    while (curr <= n) {
+        steps += Math.min(n + 1, next) - curr;
+        curr *= 10;
+        next *= 10;
+    }
+    return steps;
+}</code></pre>
+
+  <hr/>
+
+  <h2>四、复杂度分析</h2>
+  <ul>
+    <li>时间复杂度：<strong>O(log<sub>10</sub>(n) × log<sub>10</sub>(n))</strong>，每次跳转最多 log 层</li>
+    <li>空间复杂度：<strong>O(1)</strong></li>
+  </ul>
+
+  <hr/>
+
+  <h2>五、可视化理解</h2>
+  <p>以 n = 13 为例，其字典树如下：</p>
+  <pre>
+1
+├── 10
+│   ├── 100 (超出 n，跳过)
+│   └── ...
+├── 11
+├── 12
+├── 13
+└── 2 ...
+  </pre>
+  <p>第 k=2 小的数字即为：10</p>
+
+</article>
+`,
+'two-pointers': `
+<article>
+  <h1>双指针（Two Pointers）详解笔记</h1>
+
+  <h2>一、概念理解</h2>
+  <p><strong>双指针</strong>是一种在有序结构（数组、字符串、链表）中常用的技巧，通过两个指针在不同方向上移动，实现高效遍历与处理。</p>
+
+  <p>核心思想：</p>
+  <ul>
+    <li>用两个变量（通常是索引）控制遍历过程</li>
+    <li>指针之间形成滑动窗口，动态更新状态</li>
+  </ul>
+
+  <hr/>
+
+  <h2>二、常见应用场景</h2>
+  <ul>
+    <li>有序数组中的两数之和（对撞指针）</li>
+    <li>移除元素/快慢指针（覆盖式处理）</li>
+    <li>滑动窗口求最值/最短子串/区间统计</li>
+    <li>字符串匹配/回文判断/压缩处理</li>
+    <li>链表快慢指针（找中点/是否有环）</li>
+  </ul>
+
+  <hr/>
+
+  <h2>三、分类与模板</h2>
+
+  <h3>1. 对撞指针（左右夹逼）</h3>
+  <p>用于有序数组/字符串，两端向中间收缩</p>
+  <pre><code class="language-js">// 示例：两数之和
+function twoSumSorted(arr, target) {
+  let left = 0, right = arr.length - 1;
+  while (left &lt; right) {
+    const sum = arr[left] + arr[right];
+    if (sum === target) return [left, right];
+    else if (sum &lt; target) left++;
+    else right--;
+  }
+  return [-1, -1];
+}
+</code></pre>
+
+  <h3>2. 快慢指针（覆盖处理）</h3>
+  <p>常用于原地修改数组（如移除元素、数组去重）</p>
+  <pre><code class="language-js">// 示例：移除指定元素
+function removeElement(nums, val) {
+  let slow = 0;
+  for (let fast = 0; fast &lt; nums.length; fast++) {
+    if (nums[fast] !== val) {
+      nums[slow++] = nums[fast];
+    }
+  }
+  return slow;
+}
+</code></pre>
+
+  <h3>3. 滑动窗口（变长区间）</h3>
+  <p>维护一段区间，同时移动左右指针解决最小覆盖子串、最长不重复子串等</p>
+  <pre><code class="language-js">// 示例：无重复字符的最长子串
+function lengthOfLongestSubstring(s) {
+  let map = new Map(), left = 0, maxLen = 0;
+  for (let right = 0; right &lt; s.length; right++) {
+    if (map.has(s[right]) && map.get(s[right]) &gt;= left) {
+      left = map.get(s[right]) + 1;
+    }
+    map.set(s[right], right);
+    maxLen = Math.max(maxLen, right - left + 1);
+  }
+  return maxLen;
+}
+</code></pre>
+
+  <h3>4. 链表快慢指针</h3>
+  <p>用于判断链表是否有环、找中间节点等</p>
+  <pre><code class="language-js">// 示例：判断链表是否有环
+function hasCycle(head) {
+  let slow = head, fast = head;
+  while (fast &amp;&amp; fast.next) {
+    slow = slow.next;
+    fast = fast.next.next;
+    if (slow === fast) return true;
+  }
+  return false;
+}
+</code></pre>
+
+  <h2>四、复杂度分析</h2>
+  <ul>
+    <li>时间复杂度：通常为 <code>O(n)</code>，每个指针最多移动一次</li>
+    <li>空间复杂度：<code>O(1)</code> 或 <code>O(k)</code>（滑动窗口中用哈希表）</li>
+  </ul>
+
+  <hr/>
+
+  <h2>五、总结口诀</h2>
+  <blockquote>
+    对撞夹逼解排序，快慢同步移覆盖，<br/>
+    滑窗左右维区间，链表探环别落败。
+  </blockquote>
+
+</article>
+`
 }
 
