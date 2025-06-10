@@ -1,7 +1,7 @@
 const NOTES = {
   'welcome': `
   <article>
-    <h1>🌟 欢迎来到 Ronan_JoJo 的学习世界！ 🌟</h1>
+    <h1>🌟 Welcome to Ronan_JoJo's learning world! 🌟</h1>
     <p>这里记录了各类算法、编程与学习心得。请选择左侧笔记进行浏览。</p>
     <p>本页面持续优化中，欢迎交流指正！</p>
   </article>
@@ -748,7 +748,7 @@ class Solution {
     </ul>
   </article>
 `,
-'dp-notes': `
+  'dp-notes': `
 <article>
   <h1>动态规划（Dynamic Programming）</h1>
 
@@ -880,7 +880,7 @@ for (int i = 1; i <= m; i++) {
   <hr/>
 </article>
 `,
-'stock-max-2-transactions': `
+  'stock-max-2-transactions': `
 <article>
   <h1>最多两笔交易的股票买卖问题</h1>
 
@@ -966,7 +966,7 @@ class Solution {
   </ul>
 </article>
 `,
- 'kth-lexical-number': `
+  'kth-lexical-number': `
 <article>
   <h1>字典序第 k 小的数字</h1>
 
@@ -1060,7 +1060,7 @@ function getSteps(n, curr, next) {
 
 </article>
 `,
-'two-pointers': `
+  'two-pointers': `
 <article>
   <h1>双指针（Two Pointers）详解笔记</h1>
 
@@ -1160,6 +1160,822 @@ function hasCycle(head) {
     对撞夹逼解排序，快慢同步移覆盖，<br/>
     滑窗左右维区间，链表探环别落败。
   </blockquote>
+
+</article>
+`,
+  'javase-collection-basic': `
+<article>
+  <header>
+    <h1>JavaSE基础 &amp; 集合框架底层原理</h1>
+  </header>
+  <div class="page-body">
+
+    <h2>一、JavaSE 基础知识</h2>
+    <h3>1. Java 基础语法与特性</h3>
+    <ul>
+      <li><strong>数据类型：</strong> 基本类型（byte, short, int, long, float, double, char, boolean）和引用类型（类、接口、数组、String）。</li>
+      <li><strong>OOP 特性：</strong> 封装、继承、多态、抽象（接口和抽象类）。</li>
+      <li><strong>常见关键字：</strong> <code>static</code>（静态成员）、<code>final</code>（常量、不可重写/继承）、<code>this</code>（当前对象）、<code>super</code>（父类引用）。</li>
+      <li><strong>包机制：</strong> 使用 <code>package</code> 组织代码，<code>import</code> 引入其他包的类。</li>
+      <li><strong>异常处理：</strong> <code>try-catch-finally</code>，自定义异常，受检/非受检异常。</li>
+      <li><strong>常用类：</strong> String、Math、System、包装类（如 Integer）、Object。</li>
+    </ul>
+
+    <h3>2. 内存模型与垃圾回收</h3>
+    <ul>
+      <li><strong>内存结构：</strong> 方法区、堆（对象/实例）、栈（方法调用、局部变量）、本地方法栈、程序计数器。</li>
+      <li><strong>GC算法：</strong> 标记-清除、复制、标记-整理、分代收集等。</li>
+      <li><strong>常见内存泄漏原因：</strong> 静态集合类引用、未关闭资源、Listener未注销等。</li>
+    </ul>
+
+    <h2>二、Java集合框架底层原理</h2>
+
+    <h3>1. 集合体系结构图</h3>
+    <ul>
+      <li><strong>Collection</strong>：单列集合的根接口（List、Set）</li>
+      <li><strong>Map</strong>：双列集合的根接口（键值对）</li>
+      <li>
+        <img src="https://img-blog.csdnimg.cn/20200508154258559.png" alt="集合体系结构图" style="max-width: 480px;">
+      </li>
+    </ul>
+
+    <h3>2. List 接口与实现类</h3>
+    <ul>
+      <li><strong>ArrayList：</strong> 底层为<strong>动态数组</strong>，默认容量 10，扩容为原容量的 1.5 倍。查找快（O(1)），增删慢（O(n)）。线程不安全，允许null。</li>
+      <li><strong>LinkedList：</strong> 底层为<strong>双向链表</strong>，增删快（O(1)），查找慢（O(n)）。可做队列/栈。允许null。</li>
+      <li><strong>Vector：</strong> 底层也是动态数组，方法带 <code>synchronized</code>，线程安全但性能差。</li>
+    </ul>
+
+    <h3>3. Set 接口与实现类</h3>
+    <ul>
+      <li><strong>HashSet：</strong> 基于 <strong>HashMap</strong> 实现。底层用数组 + 链表/红黑树（JDK8后），无序、不重复，允许 null。</li>
+      <li><strong>LinkedHashSet：</strong> HashSet + 双向链表，保证插入顺序。</li>
+      <li><strong>TreeSet：</strong> 基于 <strong>红黑树</strong>（自平衡排序二叉树）实现，元素有序、不重复，不允许 null。</li>
+    </ul>
+
+    <h3>4. Map 接口与实现类</h3>
+    <ul>
+      <li><strong>HashMap：</strong> 底层 <strong>数组 + 链表 + 红黑树</strong>，默认容量16，负载因子0.75。线程不安全，key允许null。</li>
+      <li><strong>LinkedHashMap：</strong> HashMap + 双向链表，保证插入顺序。</li>
+      <li><strong>TreeMap：</strong> 基于红黑树，key有序，不允许null。</li>
+      <li><strong>Hashtable：</strong> 线程安全，key/value都不允许null。</li>
+      <li><strong>ConcurrentHashMap：</strong> 分段锁/桶锁实现高并发安全。</li>
+    </ul>
+
+    <h3>5. 底层原理与常见面试点</h3>
+    <ul>
+      <li><strong>HashMap扩容机制：</strong> 超过阈值（容量*负载因子）时，数组扩容为2倍，元素重新分布（再hash）。链表长度大于8时转红黑树（JDK8+）。</li>
+      <li><strong>HashMap如何解决哈希冲突：</strong> 拉链法（数组+链表/树），同一个hash值的元素存在链表或树上。</li>
+      <li><strong>ArrayList和LinkedList的区别：</strong> 一个数组随机读快，一个链表插入/删除快，场景不同。</li>
+      <li><strong>ConcurrentHashMap线程安全原理：</strong> JDK8之前用分段锁Segment，JDK8之后用CAS+Synchronized控制链表/桶节点。</li>
+    </ul>
+
+    <h3>6. 集合常见问题总结</h3>
+    <ul>
+      <li>集合都允许存 null 吗？<br>
+        ArrayList/LinkedList/HashMap/HashSet 允许，TreeSet/TreeMap 不允许（排序需要compare）。Hashtable 不允许。</li>
+      <li>fail-fast机制？<br>
+        多线程或遍历过程中结构被修改，会抛出 <code>ConcurrentModificationException</code>。</li>
+      <li>为什么HashMap不是线程安全的？<br>
+        并发put时可能导致数据覆盖或死循环（JDK7链表头插法导致环），需要用ConcurrentHashMap替代。</li>
+    </ul>
+
+    <h2>三、常用泛型与增强for</h2>
+    <ul>
+      <li><strong>泛型：</strong> Java5引入，提供类型安全，防止强制类型转换。</li>
+      <li><strong>增强for：</strong> <code>for (Type var : collection) {...}</code>，本质是迭代器遍历。</li>
+    </ul>
+  </div>
+</article>
+`,
+  'javathread-basic': `
+<article>
+  <header>
+    <h1>Java多线程编程 &amp; 多线程原理</h1>
+  </header>
+  <div class="page-body">
+
+    <h2>一、Java多线程基础</h2>
+    <ul>
+      <li><strong>线程：</strong> 程序中的独立执行路径。Java 用 <code>Thread</code> 类或实现 <code>Runnable</code> 接口创建线程。</li>
+      <li><strong>进程与线程区别：</strong> 进程是资源分配单位，线程是执行单位。一个进程可包含多个线程，共享内存。</li>
+      <li><strong>线程状态：</strong> 新建（NEW）、就绪（RUNNABLE）、运行、阻塞/等待（BLOCKED/WAITING/TIMED_WAITING）、终止（TERMINATED）。</li>
+    </ul>
+
+    <h3>1. 线程的创建方式</h3>
+    <ul>
+      <li>继承 <code>Thread</code> 类，重写 <code>run()</code> 方法。</li>
+      <li>实现 <code>Runnable</code> 接口（推荐，避免单继承局限）。</li>
+      <li>实现 <code>Callable</code> 接口（可有返回值，可抛异常），结合 <code>FutureTask</code>。</li>
+      <li>使用 <code>线程池</code>（<code>ExecutorService</code>）。</li>
+    </ul>
+
+    <h3>2. 线程的启动和停止</h3>
+    <ul>
+      <li>调用 <code>start()</code> 启动线程，自动调用 <code>run()</code> 方法。</li>
+      <li>不能用 <code>stop()</code>、<code>suspend()</code>（已废弃，容易死锁），推荐用 <code>中断标志</code>（<code>interrupt()</code>）安全结束。</li>
+    </ul>
+
+    <h2>二、Java多线程原理</h2>
+    <h3>1. 并发模型与内存可见性</h3>
+    <ul>
+      <li><strong>Java内存模型(JMM)：</strong> 规范了多线程间变量可见性、原子性和有序性。每个线程有本地工作内存，主内存存放共享变量。</li>
+      <li><strong>可见性问题：</strong> 一个线程对变量的修改，其他线程可能看不到。</li>
+      <li><strong>happens-before原则：</strong> JMM 保证了某些操作顺序先于其他操作，如锁、volatile写-读、线程启动/结束等。</li>
+    </ul>
+
+    <h3>2. 线程安全问题及解决方案</h3>
+    <ul>
+      <li><strong>原子性：</strong> 指某操作不可分割。自增、复合操作都不是原子的（如<code>i++</code>）。</li>
+      <li><strong>可见性：</strong> 多线程下，变量修改需及时被其他线程看到。用 <code>volatile</code>、<code>synchronized</code> 保证可见性。</li>
+      <li><strong>有序性：</strong> JIT/编译器/CPU会指令重排，JMM 通过内存屏障限制关键指令重排。</li>
+      <li><strong>常见线程安全工具：</strong>
+        <ul>
+          <li><code>synchronized</code> 关键字（隐式锁，内置监视器/对象锁）。</li>
+          <li><code>ReentrantLock</code>（可重入锁，显示加锁解锁，支持公平/非公平锁、可中断、条件变量）。</li>
+          <li><code>volatile</code> 保证可见性但不保证原子性。</li>
+          <li>原子类 <code>AtomicInteger</code>（基于CAS无锁实现）。</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3>3. 常见并发问题</h3>
+    <ul>
+      <li><strong>竞态条件(Race Condition)：</strong> 多线程同时读写共享变量，导致不确定结果。</li>
+      <li><strong>死锁(DeadLock)：</strong> 两个或多个线程互相等待对方释放资源，导致永久阻塞。</li>
+      <li><strong>活锁(LiveLock)：</strong> 线程活着但相互让步，导致任务一直得不到完成。</li>
+      <li><strong>饥饿(Starvation)：</strong> 线程始终得不到所需资源执行。</li>
+    </ul>
+
+    <h3>4. 线程通信</h3>
+    <ul>
+      <li>经典通信方式：<code>wait()</code>、<code>notify()</code>、<code>notifyAll()</code>（必须在同步块/方法中调用）。</li>
+      <li>高级通信方式：<code>Lock</code> 的 <code>Condition</code>、阻塞队列 <code>BlockingQueue</code>。</li>
+    </ul>
+
+    <h3>5. 线程池原理</h3>
+    <ul>
+      <li>通过 <code>Executor</code> 框架实现，常用 <code>ThreadPoolExecutor</code>。</li>
+      <li>核心参数：<code>corePoolSize</code>、<code>maximumPoolSize</code>、<code>keepAliveTime</code>、<code>workQueue</code>、<code>RejectedExecutionHandler</code>。</li>
+      <li>好处：复用线程、降低频繁创建销毁开销、统一资源管理。</li>
+    </ul>
+
+    </div>
+</article>
+`,
+  'jvm-gc-basic': `
+<article>
+  <header>
+    <h1>JVM的创建过程 &amp; 垃圾回收算法</h1>
+  </header>
+  <div class="page-body">
+
+    <h2>一、JVM的创建过程</h2>
+    <ul>
+      <li>JVM（Java Virtual Machine）是 Java 程序的运行环境，屏蔽了操作系统差异。</li>
+      <li>JVM的主要组成：<strong>类加载器（ClassLoader）</strong>、<strong>执行引擎</strong>、<strong>内存区域</strong>、<strong>垃圾收集器</strong>、<strong>本地方法接口（JNI）</strong>。</li>
+    </ul>
+    <h3>1. JVM启动流程</h3>
+    <ol>
+      <li>操作系统加载 <strong>JVM 程序（java.exe/java进程）</strong>，分配内存。</li>
+      <li>JVM初始化 <strong>堆、方法区、虚拟机栈、本地方法栈、程序计数器</strong> 等内存结构。</li>
+      <li>启动 <strong>Bootstrap ClassLoader</strong>，依次加载JRE/lib下的核心类（如rt.jar）。</li>
+      <li>加载并初始化主类（含<code>main()</code>方法）。</li>
+      <li>解释执行/编译执行主类代码，应用开始运行。</li>
+      <li>JVM运行过程中，类加载器动态加载/卸载类，内存分配/释放，垃圾回收器监控堆内存。</li>
+      <li>程序执行完毕，JVM关闭，操作系统回收进程资源。</li>
+    </ol>
+    <ul>
+      <li>核心机制：<strong>类加载机制（双亲委派）</strong>，先交给父加载器，只有父类找不到才自己加载。</li>
+      <li>执行引擎：将字节码转换为机器指令，JVM支持解释执行和JIT编译。</li>
+    </ul>
+
+    <h3>2. JVM内存结构</h3>
+    <ul>
+      <li><strong>堆（Heap）：</strong> 对象实例、数组，GC管理的主要区域。</li>
+      <li><strong>方法区（MetaSpace）：</strong> 类信息、常量、静态变量。</li>
+      <li><strong>虚拟机栈：</strong> 方法调用与局部变量，线程私有。</li>
+      <li><strong>本地方法栈：</strong> 本地C/C++方法服务。</li>
+      <li><strong>程序计数器：</strong> 记录每个线程当前执行字节码的位置。</li>
+    </ul>
+
+    <h2>二、JVM垃圾回收算法</h2>
+    <h3>1. 对象存活判定</h3>
+    <ul>
+      <li><strong>引用计数法：</strong> 每个对象维护一个引用计数，引用+1，断开-1，计数为0可回收。不能解决循环引用问题。</li>
+      <li><strong>可达性分析算法（根搜索法）：</strong> 从GC Roots（如虚拟机栈、方法区静态变量、常量池等）出发，能直接或间接到达的对象为存活对象。</li>
+    </ul>
+
+    <h3>2. 常用垃圾回收算法</h3>
+    <ul>
+      <li><strong>标记-清除（Mark-Sweep）：</strong>
+        <ul>
+          <li>分两步：标记所有可达对象，然后清除所有未被标记对象。</li>
+          <li>优点：实现简单，缺点：清除后产生内存碎片。</li>
+        </ul>
+      </li>
+      <li><strong>复制算法（Copying）：</strong>
+        <ul>
+          <li>将内存分为两块，每次只用一块，回收时把存活对象复制到另一块，剩余一次性清理。</li>
+          <li>优点：无碎片，适合新生代；缺点：浪费内存空间。</li>
+        </ul>
+      </li>
+      <li><strong>标记-整理（Mark-Compact）：</strong>
+        <ul>
+          <li>标记后将存活对象全部向一端移动，释放中间空间。</li>
+          <li>优点：无碎片，适合老年代。</li>
+        </ul>
+      </li>
+      <li><strong>分代收集算法：</strong>
+        <ul>
+          <li>将堆划分为新生代和老年代，对新生代用复制算法，老年代用标记-清除/整理。</li>
+          <li>根据对象生命周期特点优化GC效率。</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3>3. 常见垃圾收集器</h3>
+    <ul>
+      <li><strong>Serial GC：</strong> 单线程，简单高效，适合Client模式。</li>
+      <li><strong>ParNew GC：</strong> Serial的多线程版，新生代并行回收。</li>
+      <li><strong>Parallel/吞吐量优先GC：</strong> 多线程高效，适合多核服务器。</li>
+      <li><strong>CMS GC：</strong> 并发标记清除，低停顿，适合响应要求高。</li>
+      <li><strong>G1 GC：</strong> 区块式回收，预测性强，JDK9+默认，适合大内存低停顿场景。</li>
+    </ul>
+
+    <h3>4. GC调优常用参数</h3>
+    <ul>
+      <li><code>-Xms</code> / <code>-Xmx</code>：最小/最大堆内存。</li>
+      <li><code>-Xmn</code>：新生代大小。</li>
+      <li><code>-XX:SurvivorRatio</code>：Eden与Survivor区比例。</li>
+      <li><code>-XX:+UseG1GC</code>：使用G1回收器。</li>
+      <li><code>-XX:MetaspaceSize</code> / <code>-XX:MaxMetaspaceSize</code>：方法区大小。</li>
+      <li><code>-XX:+PrintGCDetails</code>：输出详细GC日志。</li>
+    </ul>
+  </div>
+</article>
+`,
+  'mysql-design-index-analyze': `
+<article>
+  <header>
+    <h1>MySQL表结构设计、索引优化、慢查询分析、事务隔离级别</h1>
+  </header>
+  <div class="page-body">
+
+    <h2>一、表结构设计</h2>
+    <ul>
+      <li><strong>规范化设计：</strong> 避免数据冗余，常用三范式，保证唯一性、一致性、最小冗余。</li>
+      <li><strong>主键设计：</strong> 推荐用自增主键或UUID，尽量短小、不可变。</li>
+      <li><strong>字段类型选择：</strong>
+        <ul>
+          <li>优先使用定长类型（如 <code>char</code>），变长用 <code>varchar</code>，长文本/二进制用 <code>text</code>/<code>blob</code>。</li>
+          <li>数字优先选 <code>int</code>，而非 <code>bigint</code>，避免空间浪费。</li>
+          <li>金额用 <code>decimal</code>，时间用 <code>datetime</code>/<code>timestamp</code>。</li>
+        </ul>
+      </li>
+      <li><strong>避免使用NULL：</strong> 尽量不让字段为NULL，影响索引与统计。</li>
+      <li><strong>表设计常见反例：</strong> 不推荐单表大宽表、过多字段、无主键、字段类型过大等。</li>
+    </ul>
+
+    <h2>二、索引优化</h2>
+    <ul>
+      <li><strong>索引类型：</strong>
+        <ul>
+          <li>主键索引（PRIMARY KEY）</li>
+          <li>唯一索引（UNIQUE）</li>
+          <li>普通索引（INDEX）</li>
+          <li>全文索引（FULLTEXT）</li>
+          <li>联合索引（组合多个字段）</li>
+        </ul>
+      </li>
+      <li><strong>B+树索引原理：</strong> MySQL大部分索引是B+树结构，叶子节点存储有序数据和指针。</li>
+      <li><strong>索引优化原则：</strong>
+        <ul>
+          <li>高区分度字段建索引。</li>
+          <li>频繁查询/排序/分组的字段建索引。</li>
+          <li>覆盖索引：查询只用到索引列，减少回表。</li>
+          <li>前缀索引适合长字段。</li>
+          <li>联合索引推荐“最左前缀”原则。</li>
+        </ul>
+      </li>
+      <li><strong>索引失效场景：</strong> where中索引列有计算/函数、模糊匹配开头、OR连接非全部索引、类型不一致、范围查询放前面等。</li>
+      <li><strong>避免过多索引：</strong> 插入/更新性能会下降，建议合理数量。</li>
+    </ul>
+
+    <h2>三、慢查询分析</h2>
+    <ul>
+      <li><strong>慢查询日志：</strong> 配置<code>slow_query_log</code>，记录执行时间超过阈值的SQL。</li>
+      <li><strong>EXPLAIN 分析：</strong>
+        <ul>
+          <li>使用 <code>EXPLAIN</code> 查看SQL的执行计划。</li>
+          <li>关注<code>type</code>（访问类型，越靠近ALL越差）、<code>key</code>（使用的索引）、<code>rows</code>（扫描行数）、<code>extra</code>（Using index、Using filesort等）。</li>
+        </ul>
+      </li>
+      <li><strong>慢SQL常见原因：</strong>
+        <ul>
+          <li>无索引或索引失效。</li>
+          <li>全表扫描、回表次数多。</li>
+          <li>大批量数据操作。</li>
+        </ul>
+      </li>
+      <li><strong>优化思路：</strong> 建合理索引、SQL拆分、避免大事务、用limit/分页、垂直/水平拆分表。</li>
+    </ul>
+
+    <h2>四、事务隔离级别</h2>
+    <ul>
+      <li><strong>事务：</strong> 保证一组SQL要么全部执行要么全部不执行（ACID）。</li>
+      <li><strong>隔离级别：</strong>
+        <ol>
+          <li><strong>读未提交（Read Uncommitted）：</strong> 允许脏读，几乎不用。</li>
+          <li><strong>读已提交（Read Committed）：</strong> Oracle默认，防止脏读，但不可重复读。</li>
+          <li><strong>可重复读（Repeatable Read）：</strong> MySQL默认，防止不可重复读，但有幻读。</li>
+          <li><strong>串行化（Serializable）：</strong> 最严格，完全串行，性能低。</li>
+        </ol>
+      </li>
+      <li><strong>常见并发问题：</strong>
+        <ul>
+          <li>脏读：读到未提交数据。</li>
+          <li>不可重复读：同一事务两次读结果不同。</li>
+          <li>幻读：同一事务两次读范围内行数不一致。</li>
+        </ul>
+      </li>
+      <li><strong>MySQL实现：</strong> 通过MVCC（多版本并发控制）、行锁/表锁等机制实现。</li>
+    </ul>
+  </div>
+</article>
+`,
+  'jump-game': `
+<article>
+  <header>
+    <h1>跳跃游戏（Jump Game）</h1>
+  </header>
+  <div class="page-body">
+
+    <h2>问题描述</h2>
+    <p>给定一个非负整数数组 <code>nums</code>，你最初位于数组的第一个下标（下标 0）。数组中的每个元素 <code>nums[i]</code> 代表你在该位置可以跳跃的最大长度。你的目标是判断你是否能够到达数组的最后一个下标。</p>
+    <ul>
+      <li><strong>输入:</strong> int[] nums （非负整数数组）</li>
+      <li><strong>输出:</strong> boolean（如果能到达最后一个下标返回 true，否则返回 false）</li>
+    </ul>
+    <p><strong>示例 1：</strong></p>
+    <pre>
+nums = [2, 3, 1, 1, 4]
+输出: true
+解释: 从下标 0 跳 1 步到下标 1，然后从下标 1 跳 3 步到达最后一个下标。
+    </pre>
+    <p><strong>示例 2：</strong></p>
+    <pre>
+nums = [3, 2, 1, 0, 4]
+输出: false
+解释: 你会最终到达下标 3，此时 nums[3] = 0。由于无法从下标 3 继续跳跃，因此不可能到达最后一个下标。
+    </pre>
+
+    <hr/>
+
+    <h2>核心思想：贪心算法</h2>
+    <ul>
+      <li>使用变量 <code>max_reach</code> 跟踪从起点出发目前能到达的最远下标。</li>
+      <li>遍历每个下标 <code>i</code>，如果 <code>i &gt; max_reach</code> 说明此处不可达，直接返回 false。</li>
+      <li>每次更新 <code>max_reach = Math.max(max_reach, i + nums[i])</code>。</li>
+      <li>只要 <code>max_reach</code> 覆盖到或超过最后一个下标，立即返回 true。</li>
+    </ul>
+
+    <hr/>
+
+    <h2>算法步骤</h2>
+    <ol>
+      <li>获取数组长度 <code>n</code>。若 <code>n==1</code>，直接返回 true。</li>
+      <li>初始化 <code>max_reach=0</code>。</li>
+      <li>遍历下标 <code>i</code> 从 0 到 n-1：
+        <ul>
+          <li>若 <code>i &gt; max_reach</code>，直接返回 false。</li>
+          <li>更新 <code>max_reach = Math.max(max_reach, i + nums[i])</code>。</li>
+          <li>若 <code>max_reach &gt;= n-1</code>，直接返回 true。</li>
+        </ul>
+      </li>
+      <li>遍历完后还未返回 true，则返回 false。</li>
+    </ol>
+
+    <hr/>
+
+    <h2>Java 代码</h2>
+    <pre><code>class Solution {
+    public boolean canJump(int[] nums) {
+        int n = nums.length;
+        if (n == 1) return true;
+        int max_reach = 0;
+        for (int i = 0; i < n; i++) {
+            if (i > max_reach) return false;
+            max_reach = Math.max(max_reach, i + nums[i]);
+            if (max_reach >= n - 1) return true;
+        }
+        return false;
+    }
+}</code></pre>
+
+    <hr/>
+
+    <h2>复杂度分析</h2>
+    <ul>
+      <li><strong>时间复杂度：</strong> O(N)</li>
+      <li><strong>空间复杂度：</strong> O(1)</li>
+    </ul>
+
+    <hr/>
+
+    <h2>贪心算法有效性解释</h2>
+    <ul>
+      <li>每一步都选择当前可达的最远距离作为“局部最优”，只要某一步 <code>max_reach</code> 覆盖到终点，就保证至少存在一条路径。</li>
+      <li>如果遇到一个下标 <code>i</code> 超过了 <code>max_reach</code>，说明无法继续前进，终点不可达。</li>
+    </ul>
+  </div>
+</article>
+`,
+  'mysql-explain-index': `
+<article>
+  <header>
+    <h1>EXPLAIN 分析 SQL 执行计划 &amp; 索引原理与设计</h1>
+  </header>
+  <div class="page-body">
+
+    <h2>一、使用 EXPLAIN 分析 SQL 执行计划</h2>
+    <ul>
+      <li><strong>EXPLAIN</strong> 语句用于分析 SQL 的实际执行路径和使用的索引，帮助发现 SQL 性能瓶颈。</li>
+      <li>基本用法：<code>EXPLAIN SELECT ...</code></li>
+      <li>主要关注字段：
+        <ul>
+          <li><code>id</code>：查询中每个子句的执行顺序，值越大优先级越高。</li>
+          <li><code>select_type</code>：查询类型（SIMPLE、PRIMARY、SUBQUERY 等）。</li>
+          <li><code>table</code>：当前分析的表。</li>
+          <li><code>type</code>：访问类型（性能从好到差：<code>const</code> &gt; <code>eq_ref</code> &gt; <code>ref</code> &gt; <code>range</code> &gt; <code>index</code> &gt; <code>ALL</code>），<b>ALL 为全表扫描</b>。</li>
+          <li><code>possible_keys</code>：可能用到的索引。</li>
+          <li><code>key</code>：实际用到的索引。</li>
+          <li><code>key_len</code>：使用的索引长度。</li>
+          <li><code>rows</code>：预计要扫描的行数。</li>
+          <li><code>Extra</code>：额外信息（如 Using index、Using filesort、Using temporary）。</li>
+        </ul>
+      </li>
+      <li>
+        <strong>常见优化方向：</strong>
+        <ul>
+          <li>让 <code>type</code> 尽量为 <code>ref</code> 或 <code>const</code>，避免 <code>ALL</code>。</li>
+          <li>关注 <code>rows</code> 数量，越少越好。</li>
+          <li>关注 <code>Extra</code> 中是否为 <code>Using filesort</code>、<code>Using temporary</code>（性能较差）。</li>
+        </ul>
+      </li>
+      <li>
+        <strong>EXPLAIN 示例：</strong>
+        <pre><code>EXPLAIN SELECT * FROM user WHERE age &gt; 18 AND name = 'Tom';</code></pre>
+      </li>
+    </ul>
+
+    <h2>二、B+树索引原理</h2>
+    <ul>
+      <li>MySQL 的主流存储引擎（如 InnoDB）索引结构为 <b>B+树</b>。</li>
+      <li><strong>B+树特点：</strong>
+        <ul>
+          <li>所有数据都存储在叶子节点，叶子节点之间有链表指针。</li>
+          <li>非叶子节点只存储键值信息，减少磁盘IO，提高查找效率。</li>
+          <li>查询、插入、范围查找效率高，适合大数据量的磁盘存储。</li>
+        </ul>
+      </li>
+      <li>
+        <strong>主键索引（聚集索引）：</strong> 叶子节点保存整行数据。
+      </li>
+      <li>
+        <strong>辅助索引（二级索引）：</strong> 叶子节点保存主键值，查找时需“回表”。
+      </li>
+    </ul>
+
+    <h2>三、覆盖索引</h2>
+    <ul>
+      <li><b>覆盖索引（Covering Index）</b>：查询所需的字段全部在某个索引里，无需回表。</li>
+      <li>优点：减少 IO 和回表操作，提升查询效率。</li>
+      <li>EXPLAIN 的 <code>Extra</code> 字段显示 <code>Using index</code> 即为覆盖索引。</li>
+      <li>例子：<code>SELECT age FROM user WHERE name = 'Tom';</code>，如果建有 (name, age) 联合索引，此 SQL 就是覆盖索引。</li>
+    </ul>
+
+    <h2>四、联合索引设计原则</h2>
+    <ul>
+      <li><b>联合索引：</b> 一个索引包含多个字段（如 <code>KEY idx_name_age (name, age)</code>）。</li>
+      <li><b>最左前缀原则：</b> 查询条件需要命中联合索引的最左连续字段。例如建索引 (a,b,c) 时，a、a+b、a+b+c 都能用到索引，b+c 不行。</li>
+      <li><b>顺序很重要：</b> 把区分度高、常用做范围/等值查询的字段放前面。</li>
+      <li><b>能用联合索引就别用多个单列索引。</b></li>
+      <li>覆盖索引和联合索引通常配合使用，提升效率。</li>
+    </ul>
+  </div>
+</article>
+`,
+  'redis-structure-usage': `
+<article>
+  <h1>Redis 核心知识笔记</h1>
+
+  <h2>一、五大数据结构及典型使用场景</h2>
+  <ul>
+    <li><strong>String：</strong>最基本的数据类型，常用于缓存对象（如Token、用户信息）</li>
+    <li><strong>List：</strong>链表结构，常用于消息队列、任务队列（如秒杀异步下单）</li>
+    <li><strong>Set：</strong>无序集合，常用于点赞、标签、去重（如签到去重）</li>
+    <li><strong>Hash：</strong>键值对集合，适合存储对象字段（如用户信息表）</li>
+    <li><strong>ZSet（有序集合）：</strong>带分数的集合，常用于排行榜、延迟队列</li>
+  </ul>
+
+  <h3>典型场景示例</h3>
+  <ul>
+    <li>缓存：<code>String + JSON</code> 存对象，配合过期时间</li>
+    <li>排行榜：使用 <code>ZSet</code> 存用户得分</li>
+    <li>布隆过滤器：结合第三方库 + Bitmap 实现大规模去重判重</li>
+    <li>延迟队列：<code>ZSet</code> 中 score 设为触发时间戳，定期轮询处理</li>
+  </ul>
+
+  <hr/>
+
+  <h2>二、持久化机制</h2>
+  <ul>
+    <li><strong>RDB（快照）</strong>：定时/触发保存内存快照，恢复速度快，占用小；风险在于可能丢失最后一次快照后的数据</li>
+    <li><strong>AOF（追加日志）</strong>：每次写操作都会追加日志文件，重启时回放，数据更安全但文件更大</li>
+    <li><strong>混合持久化</strong>：Redis 4.0 起默认支持，结合 RDB 快照和 AOF 重放速度</li>
+  </ul>
+
+  <hr/>
+
+  <h2>三、主从复制、哨兵与集群机制</h2>
+  <ul>
+    <li><strong>主从复制</strong>：master 写，slave 读，实现读写分离，提升性能</li>
+    <li><strong>哨兵机制</strong>：Sentinel 自动故障转移 + 监控主从节点，保障高可用</li>
+    <li><strong>Redis 集群</strong>：将数据划分 slot（16384 个），自动分片实现大规模分布式部署</li>
+  </ul>
+
+  <hr/>
+
+  <h2>四、缓存三大问题及优化方案</h2>
+  <h3>1. 缓存穿透</h3>
+  <ul>
+    <li><strong>问题：</strong>频繁请求数据库中不存在的数据，缓存不命中，每次都打数据库</li>
+    <li><strong>解决方案：</strong>
+      <ul>
+        <li>缓存空对象（设置短 TTL）</li>
+        <li>使用布隆过滤器提前拦截无效 key</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>2. 缓存击穿</h3>
+  <ul>
+    <li><strong>问题：</strong>某热点 key 过期瞬间，大量请求同时打 DB</li>
+    <li><strong>解决方案：</strong>
+      <ul>
+        <li>热点 key 设置永不过期 + 定时刷新</li>
+        <li>加互斥锁（如分布式锁）防止同时回源</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>3. 缓存雪崩</h3>
+  <ul>
+    <li><strong>问题：</strong>大量 key 同时过期，数据库压力骤增</li>
+    <li><strong>解决方案：</strong>
+      <ul>
+        <li>设置随机过期时间，错开 key 的失效</li>
+        <li>配合限流、降级策略保障系统可用性</li>
+      </ul>
+    </li>
+  </ul>
+
+  <hr/>
+
+  <h2>五、实践优化经验</h2>
+  <ul>
+    <li>采用 <code>LocalCache + Redis</code> 两级缓存，提升热点命中率</li>
+    <li>使用 Redisson 实现可重入分布式锁，保障数据一致性</li>
+    <li>构建异步刷新机制，定期同步缓存与数据库状态</li>
+    <li>监控 <code>QPS/命中率/KeySize/TTL</code>，及时调整策略</li>
+  </ul>
+</article>
+`,
+  'spring-system': `
+<article>
+  <h1>🌱 Spring 技术体系详解</h1>
+
+  <h2>1. Spring Framework</h2>
+  <p>
+    Spring Framework 是整个 Spring 家族的核心基础模块，提供了控制反转（IoC）、面向切面编程（AOP）、事务控制等能力。
+  </p>
+  <ul>
+    <li><strong>IoC（Inversion of Control）：</strong>
+      控制反转是一种设计原则，把对象的创建和依赖的维护交给 Spring 容器来管理，从而实现组件之间的解耦。通过 @Component、@Service、@Repository 等注解，配合 @Autowired 或构造函数注入，可以轻松实现依赖注入。
+    </li>
+    <li><strong>Bean 生命周期：</strong>
+      Bean 从初始化到销毁经历多个阶段，如实例化、属性注入、初始化方法（@PostConstruct）、销毁方法（@PreDestroy），可以通过 BeanPostProcessor 进行扩展。
+    </li>
+    <li><strong>AOP：</strong>
+      通过 @Aspect 注解定义切面类，可在方法执行前后插入自定义逻辑。常用于日志记录、权限校验、事务管理等。底层使用 JDK 动态代理或 CGLIB 代理实现。
+    </li>
+    <li><strong>事务管理：</strong>
+      支持声明式事务（@Transactional）和编程式事务（TransactionTemplate）。事务传播行为如 REQUIRED、REQUIRES_NEW 决定事务边界，隔离级别如 READ_COMMITTED 控制并发访问的一致性。
+    </li>
+  </ul>
+
+  <h2>2. Spring Boot</h2>
+  <p>
+    Spring Boot 是为简化 Spring 应用开发而诞生的框架，它封装了大量默认配置，使开发者能快速启动项目。
+  </p>
+  <ul>
+    <li><strong>自动配置原理：</strong>
+      依赖 @EnableAutoConfiguration 注解，结合 spring.factories 文件，通过条件注解（@Conditional）判断是否加载某些配置类，实现按需自动注入 Bean。
+    </li>
+    <li><strong>Starter 模块：</strong>
+      各种功能模块如 Web、Redis、MyBatis 都有对应的 starter，例如 <code>spring-boot-starter-web</code>，可以零配置快速接入依赖。
+    </li>
+    <li><strong>配置文件管理：</strong>
+      支持 application.yml 和 application.properties，通过 <code>spring.profiles.active</code> 实现不同环境配置切换；@ConfigurationProperties 可将配置项绑定为对象。
+    </li>
+    <li><strong>快速构建能力：</strong>
+      配合 Spring Initializr，可以一键生成整合了 Maven、热部署、健康检查、Swagger 的项目骨架，大幅提升开发效率。
+    </li>
+  </ul>
+
+  <h2>3. Spring MVC</h2>
+  <p>
+    Spring MVC 是一种基于 Servlet 的 Web 框架，支持 RESTful 架构，适合构建前后端分离系统。
+  </p>
+  <ul>
+    <li><strong>控制器开发：</strong>
+      使用 @RestController 定义 API 接口，结合 @GetMapping、@PostMapping、@RequestParam、@PathVariable 实现参数绑定。
+    </li>
+    <li><strong>参数校验：</strong>
+      基于 JSR303 规范，引入 Hibernate Validator，使用 @Valid 和 @NotBlank、@Min 等注解对入参进行自动校验，结合 BindingResult 获取错误信息。
+    </li>
+    <li><strong>统一异常处理：</strong>
+      使用 @ControllerAdvice + @ExceptionHandler 统一处理业务异常与系统异常，提升接口稳定性和可维护性。
+    </li>
+    <li><strong>拦截器机制：</strong>
+      通过实现 HandlerInterceptor 接口，可以对请求进行前置处理（如鉴权）、后置处理（如日志记录），是实现全局控制逻辑的有效手段。
+    </li>
+  </ul>
+
+  <h2>4. Spring Security & JWT</h2>
+  <p>
+    Spring Security 是一个功能强大的安全框架，负责认证（Authentication）与授权（Authorization），支持自定义登录逻辑与 Token 授权方案。
+  </p>
+  <ul>
+    <li><strong>认证流程：</strong>
+      用户提交用户名密码 -> UsernamePasswordAuthenticationFilter 拦截 -> AuthenticationManager -> UserDetailsService 加载用户信息 -> 校验成功生成 Authentication。
+    </li>
+    <li><strong>授权机制：</strong>
+      可使用注解如 @PreAuthorize("@auth.check(...)") 或配置方式控制资源访问权限，支持基于角色、权限、SpEL 表达式的细粒度控制。
+    </li>
+    <li><strong>JWT 集成：</strong>
+      实现前后端分离登录方案，登录成功生成 JWT 并返回前端，后续访问通过 JWT 解析用户信息并放入 SpringSecurity 上下文。
+    </li>
+    <li><strong>RBAC 模型：</strong>
+      将用户、角色、权限解耦，通过中间表建立多对多关系，更灵活地控制系统权限。
+    </li>
+    <li><strong>OAuth2 授权：</strong>
+      掌握授权码模式、密码模式、客户端模式、隐式模式，了解 Spring Authorization Server 的搭建方法。
+    </li>
+  </ul>
+
+  <h2>5. Spring AOP（注解切面编程）</h2>
+  <ul>
+    <li><strong>切点表达式：</strong>
+      通过 execution() 指定切点位置，例如：<code>@Around("execution(* com.zzyl..*.service..*(..))")</code>。</li>
+    <li><strong>应用场景：</strong>
+      AOP 被广泛用于操作日志收集、权限校验、接口限流、慢接口监控、分布式事务协调等横切逻辑的实现。</li>
+    <li><strong>Advice 类型：</strong>
+      包括 @Before、@After、@AfterReturning、@Around、@AfterThrowing，不同类型分别处理方法执行的不同阶段。
+    </li>
+  </ul>
+
+  <h2>6. Spring 事务控制</h2>
+  <ul>
+    <li><strong>@Transactional 使用：</strong>
+      可加在类或方法上，默认只对运行时异常（RuntimeException）触发回滚，也可通过 rollbackFor 指定回滚类型。</li>
+    <li><strong>事务传播行为：</strong>
+      如 REQUIRED（默认，加入当前事务）、REQUIRES_NEW（新建事务）、NESTED（嵌套事务）等。</li>
+    <li><strong>隔离级别：</strong>
+      控制并发事务间的可见性问题，如读未提交（READ_UNCOMMITTED）、可重复读（REPEATABLE_READ）等。</li>
+    <li><strong>事务失效场景：</strong>
+      如方法内部调用、未被 Spring 管理的类、捕获异常未重新抛出，都会导致 @Transactional 失效。
+    </li>
+  </ul>
+
+  <h2>7. Spring AI</h2>
+  <p>
+    Spring AI 是 2024 年推出的统一 AI 编程模型，旨在降低大模型应用接入门槛，支持多种模型平台如 OpenAI、通义千问、文心一言等。
+  </p>
+  <ul>
+    <li><strong>PromptTemplate：</strong>封装 prompt 模板与参数，适合做文本补全、对话生成等。</li>
+    <li><strong>ChatClient：</strong>核心接口类，调用大语言模型进行交互式聊天。</li>
+    <li><strong>EmbeddingClient：</strong>将文本向量化，适合语义搜索、知识库匹配等场景。</li>
+    <li><strong>支持模型：</strong>OpenAI（GPT-4/3.5）、Azure OpenAI、阿里通义千问、百度文心一言、智谱清言等。</li>
+    <li><strong>使用方式：</strong>通过 application.yml 配置 API Key 与 Provider，然后注入 Client 使用。</li>
+    <li><strong>常见场景：</strong>构建问答机器人、代码生成、智能摘要、企业知识库问答系统等。
+    </li>
+  </ul>
+</article>
+`,
+  'message-queue': `
+<article>
+  <h1>消息队列使用场景及实战（RabbitMQ / EMQ）</h1>
+
+  <h2>一、消息队列的作用</h2>
+  <p>消息队列（MQ）是一种异步通信机制，常用于解耦系统、削峰填谷、异步处理和分布式通信。</p>
+  <ul>
+    <li><strong>解耦：</strong>服务之间不直接调用，降低耦合度。</li>
+    <li><strong>异步处理：</strong>下单后通知库存/支付/物流异步执行，加快响应速度。</li>
+    <li><strong>削峰填谷：</strong>通过队列缓存流量高峰，防止系统崩溃。</li>
+    <li><strong>广播通信：</strong>多服务订阅一个主题，实现通知广播。</li>
+    <li><strong>最终一致性：</strong>重要任务通过 MQ 保证落库失败后的重试与补偿。</li>
+  </ul>
+
+  <h2>二、RabbitMQ 概述</h2>
+  <ul>
+    <li><strong>协议：</strong>基于 AMQP（高级消息队列协议），适合企业系统内部通信。</li>
+    <li><strong>核心角色：</strong>Producer（生产者）、Exchange（交换机）、Queue（队列）、Consumer（消费者）、RoutingKey（路由键）。</li>
+    <li><strong>Exchange 类型：</strong>
+      <ul>
+        <li><code>Direct</code>：点对点，精确匹配 RoutingKey。</li>
+        <li><code>Fanout</code>：广播模式，忽略 RoutingKey，所有绑定的 Queue 都会收到。</li>
+        <li><code>Topic</code>：模糊匹配，支持通配符。</li>
+        <li><code>Headers</code>：根据 headers 头属性路由。</li>
+      </ul>
+    </li>
+    <li><strong>特性：</strong>支持消息持久化、确认机制（ACK）、死信队列（DLX）、延迟队列（TTL + DLX 实现）。</li>
+  </ul>
+
+  <h3>RabbitMQ 实战场景</h3>
+  <ul>
+    <li><strong>电商下单：</strong>用户下单写入订单表后异步发送 MQ 消息，通知库存系统锁库。</li>
+    <li><strong>延迟订单取消：</strong>未支付订单 TTL 后进入死信队列，触发取消操作。</li>
+    <li><strong>用户通知系统：</strong>使用 Topic 模式将消息路由给不同服务，如短信、站内信、邮箱。</li>
+    <li><strong>日志采集：</strong>不同服务将操作日志发送到 MQ，由日志消费者统一入库或发送到 ELK。</li>
+  </ul>
+
+  <h3>实战代码片段（Spring Boot 整合）</h3>
+  <pre><code class="language-java">
+@Configuration
+public class RabbitConfig {
+    @Bean
+    public Queue orderQueue() {
+        return new Queue("order.queue", true); // durable
+    }
+
+    @Bean
+    public DirectExchange orderExchange() {
+        return new DirectExchange("order.exchange");
+    }
+
+    @Bean
+    public Binding binding() {
+        return BindingBuilder.bind(orderQueue())
+            .to(orderExchange())
+            .with("order.create");
+    }
+}
+  </code></pre>
+  <pre><code class="language-java">
+// 发送消息
+rabbitTemplate.convertAndSend("order.exchange", "order.create", orderDto);
+  </code></pre>
+
+  <h2>三、EMQX（EMQ）概述</h2>
+  <p>
+    EMQX 是一个高性能的开源 MQTT 消息服务器，特别适合物联网（IoT）场景。
+  </p>
+  <ul>
+    <li><strong>协议支持：</strong>MQTT、MQTT-SN、CoAP、LwM2M、WebSocket。</li>
+    <li><strong>特性：</strong>百万并发连接、QoS 等级支持（最多一次、至少一次、仅一次）、设备上下线管理、规则引擎。</li>
+    <li><strong>集群能力：</strong>支持集群部署，节点间状态共享，便于水平扩展。</li>
+  </ul>
+
+  <h3>EMQX 实战场景</h3>
+  <ul>
+    <li><strong>智能设备上报：</strong>设备定时通过 MQTT 上报温湿度、位置信息。</li>
+    <li><strong>实时告警推送：</strong>监测数据超过阈值时，EMQX 使用规则引擎转发到 HTTP API 或 Kafka。</li>
+    <li><strong>远程设备控制：</strong>平台通过 MQTT Topic 发布指令，设备监听对应主题并执行。</li>
+    <li><strong>与后端集成：</strong>设备上报数据通过 WebHook 转发到后端接口，进行处理与持久化。</li>
+  </ul>
+
+  <h3>EMQX 实战技巧</h3>
+  <ul>
+    <li>通过 Dashboard 配置 WebHook 或 MQTT 规则。</li>
+    <li>使用 REST API 批量订阅/取消订阅。</li>
+    <li>结合 JWT 或 Client ID 进行设备鉴权。</li>
+    <li>利用 Retained 消息实现“设备最后状态”的持久保留。</li>
+  </ul>
+
+  <h2>四、对比总结</h2>
+  <table>
+    <thead>
+      <tr><th>特性</th><th>RabbitMQ</th><th>EMQX</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>协议</td><td>AMQP</td><td>MQTT</td></tr>
+      <tr><td>场景</td><td>系统解耦、异步通知</td><td>IoT 设备通信</td></tr>
+      <tr><td>传输方式</td><td>服务端 <-> 服务端</td><td>端 <-> 云（设备 <-> 平台）</td></tr>
+      <tr><td>吞吐能力</td><td>10W+ TPS</td><td>百万级连接</td></tr>
+    </tbody>
+  </table>
 
 </article>
 `

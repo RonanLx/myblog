@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8" />
   <title>Accelerators</title>
@@ -24,18 +25,22 @@
       border-right: 1px solid #222;
       display: flex;
       flex-direction: column;
-      max-height: 100vh;       /* ✅ 限制最大高度 */
-      overflow-y: auto;        /* ✅ 内容溢出滚动 */
+      max-height: 100vh;
+      /* ✅ 限制最大高度 */
+      overflow-y: auto;
+      /* ✅ 内容溢出滚动 */
     }
 
     /* ✅ 美化滚动条 */
     .sidebar::-webkit-scrollbar {
       width: 6px;
     }
+
     .sidebar::-webkit-scrollbar-thumb {
       background-color: #444;
       border-radius: 6px;
     }
+
     .sidebar::-webkit-scrollbar-track {
       background: #1a1a1f;
     }
@@ -212,21 +217,39 @@
     </div>
     <div class="sidebar-section">
       <h2 onclick="toggleSidebar('note')">
-        <span class="arrow collapsed" id="arrow-note">▼</span> 学习笔记
+        <span class="arrow collapsed" id="arrow-note">▼</span> 笔记
       </h2>
       <ul class="note-list collapsed" id="note-list">
         <li onclick="showNote('java-thinking-in-java', this)">《Java 编程思想》读书随记</li>
         <li onclick="showNote('concurrency-overview', this)">并发编程与底层并发详解</li>
         <li onclick="showNote('tree-structure', this)">数据结构笔记：二叉树、红黑树、B树、B+树</li>
+        <li onclick="showNote('mysql-explain-index', this)">B+树索引原理、覆盖索引和联合索引设计原则</li>
+        <li onclick="showNote('javase-collection-basic', this)">JavaSE基础 &amp; 集合框架底层原理</li>
+        <li onclick="showNote('dp-notes', this)">动态规划（Dynamic Programming）</li>
+        <li onclick="showNote('mysql-design-index-analyze', this)">MySQL表结构设计、索引优化、慢查询分析、事务隔离级别</li>
+        <li onclick="showNote('jvm-gc-basic', this)">JVM的创建过程 &amp; 垃圾回收算法</li>
+        <li onclick="showNote('two-pointers', this)">双指针（Two Pointers）详解</li>
+        <li onclick="showNote('spring-system', this)">Spring 技术体系</li>
+        <li onclick="showNote('javathread-basic', this)">Java多线程编程 &amp; 多线程原理</li>
+        <li onclick="showNote('redis-structure-usage', this)">Redis 核心知识笔记</li>
+        <li onclick="showNote('message-queue', this)">消息队列使用场景及实战（RabbitMQ / EMQ）</li>
+        <!-- 更多笔记添加在这里 -->
+      </ul>
+    </div>
+    <div class="sidebar-section">
+      <h2 onclick="toggleSidebar('solution')">
+        <span class="arrow collapsed" id="arrow-solution">▼</span> Solution
+      </h2>
+      <ul class="note-list collapsed" id="solution-list">
         <li onclick="showNote('clear-stars', this)">删除星号以后的字典序最小的字符串</li>
         <li onclick="showNote('largest-rectangle', this)">柱状图中最大矩形面积</li>
-        <li onclick="showNote('dp-notes', this)">动态规划（Dynamic Programming）</li>
         <li onclick="showNote('stock-max-2-transactions', this)">最多两笔交易的股票买卖问题</li>
-        <li onclick="showNote('word-chain', this)">单词接龙</li>
-        <li onclick="showNote('lexical-order', this)">字典序遍历Lexical Order</li>
         <li onclick="showNote('kth-lexical-number', this)">字典序第 k 小的数字</li>
-        <li onclick="showNote('two-pointers', this)">双指针（Two Pointers）详解</li>
-        <!-- 更多笔记添加在这里 -->
+        <li onclick="showNote('lexical-order', this)">字典序遍历Lexical Order</li>
+        <li onclick="showNote('jump-game', this)">跳跃游戏（Jump Game）</li>
+        <li onclick="showNote('word-chain', this)">单词接龙</li>
+
+        <!-- 更多 Solution 项可在此添加 -->
       </ul>
     </div>
   </nav>
@@ -236,25 +259,38 @@
   </main>
 
   <script src="accelerators-notes.js"></script>
-  <script>
-    function toggleSidebar(type) {
-      const list = document.getElementById(type === 'nav' ? 'nav-list' : 'note-list');
-      const arrow = document.getElementById('arrow-' + type);
-      list.classList.toggle('collapsed');
-      arrow.classList.toggle('collapsed');
-    }
+<script>
+  function toggleSidebar(type) {
+    const listId = {
+      nav: 'nav-list',
+      note: 'note-list',
+      solution: 'solution-list'
+    }[type];
 
-    function showNote(key, el) {
-      document.getElementById('note-detail').innerHTML = NOTES[key];
-      document.querySelectorAll('.note-list li').forEach(li => li.classList.remove('active'));
-      if (el) el.classList.add('active');
-      if (key === 'welcome') setTimeout(initCarousel, 60);
-    }
+    const arrow = document.getElementById('arrow-' + type);
+    const list = document.getElementById(listId);
+    list.classList.toggle('collapsed');
+    arrow.classList.toggle('collapsed');
+  }
 
-    window.onload = function () {
-      document.getElementById('note-detail').innerHTML = NOTES['welcome'];
-      setTimeout(initCarousel, 60);
-    }
-  </script>
+  function showNote(key, el) {
+    document.getElementById('note-detail').innerHTML = NOTES[key];
+
+    // 清除所有类型列表项的高亮
+    document.querySelectorAll('.sidebar .note-list li').forEach(li => li.classList.remove('active'));
+
+    // 设置当前点击项为高亮
+    if (el) el.classList.add('active');
+
+    // welcome 页面加载特殊逻辑
+    if (key === 'welcome') setTimeout(initCarousel, 60);
+  }
+
+  window.onload = function () {
+    document.getElementById('note-detail').innerHTML = NOTES['welcome'];
+    setTimeout(initCarousel, 60);
+  }
+</script>
 </body>
+
 </html>
