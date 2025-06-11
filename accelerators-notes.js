@@ -1978,6 +1978,90 @@ rabbitTemplate.convertAndSend("order.exchange", "order.create", orderDto);
   </table>
 
 </article>
+`,
+'max-difference-substring': `
+<article>
+  <header>
+    <h1 class="page-title">最大差值子串（滑动窗口+奇偶优化）</h1>
+  </header>
+  <div class="page-body">
+    <h2>一、题目描述</h2>
+    <p>
+      给定一个数字字符串 <code>s</code> 和整数 <code>k</code>，请找出 <strong>所有长度至少为 k 的子串</strong> 中，满足：
+      <ul>
+        <li>字符 a 出现奇数次</li>
+        <li>字符 b 出现偶数次</li>
+        <li>freq[a] - freq[b] 的最大值</li>
+      </ul>
+      <br>
+      如果不存在合法方案，返回 -1。
+    </p>
+
+    <h2>二、算法思路总结</h2>
+    <ol>
+      <li>
+        <strong>暴力解法：</strong>
+        <ul>
+          <li>枚举所有长度 ≥ k 的子串，统计所有数字出现次数。</li>
+          <li>再枚举所有(a, b)对，a为奇数次，b为偶数次，记录 freq[a] - freq[b] 的最大值。</li>
+          <li>复杂度 O(n³)，容易超时。</li>
+        </ul>
+      </li>
+      <li>
+        <strong>滑动窗口+奇偶性最小前缀优化：</strong>
+        <ul>
+          <li>枚举每一对 (a, b)，对于每一对，使用滑动窗口遍历字符串。</li>
+          <li>用两个数组分别统计滑动窗口内、窗口外各数字出现次数。</li>
+          <li>用 <code>minS[奇偶][奇偶]</code> 维护左端点前每种奇偶性的最小 freq[a]-freq[b]。</li>
+          <li>每次窗口移动时，动态更新最大差值。</li>
+          <li>复杂度 O(字符种类² × n)，适合实际工程与竞赛。</li>
+        </ul>
+      </li>
+    </ol>
+
+    <h2>三、核心代码（Java 实现）</h2>
+    <pre><code class="language-java">
+// 支持0~9数字
+class Solution {
+    public int maxDifference(String S, int k) {
+        final int INF = Integer.MAX_VALUE / 2;
+        char[] s = S.toCharArray();
+        int ans = -INF;
+        int C = 10; // 数字0~9
+        for (int x = 0; x < C; x++) {
+            for (int y = 0; y < C; y++) {
+                if (y == x) continue;
+                int[] curS = new int[C];  // 窗口内各数字频次
+                int[] preS = new int[C];  // 窗口左侧已滑出频次
+                int[][] minS = { {INF, INF}, {INF, INF} }; // 记录奇偶性前缀最小值
+                int left = 0;
+                for (int i = 0; i < s.length; i++) {
+                    curS[s[i] - '0']++;
+                    int r = i + 1;
+                    // 保证窗口长度≥k 且 x,y在窗口内
+                    while (r - left >= k && curS[x] > preS[x] && curS[y] > preS[y]) {
+                        int px = preS[x] & 1, py = preS[y] & 1;
+                        minS[px][py] = Math.min(minS[px][py], preS[x] - preS[y]);
+                        preS[s[left] - '0']++;
+                        left++;
+                    }
+                    // 依据当前x、y的奇偶性选取最优前缀
+                    ans = Math.max(ans, curS[x] - curS[y] - minS[(curS[x] & 1) ^ 1][curS[y] & 1]);
+                }
+            }
+        }
+        return ans == -INF ? -1 : ans;
+    }
+}
+    </code></pre>
+
+    <h2>四、复杂度分析</h2>
+    <ul>
+      <li><strong>时间复杂度：</strong> O(字符种类² × n)，通常字符种类为10，适合 1e3 级数据</li>
+      <li><strong>空间复杂度：</strong> O(字符种类²)</li>
+    </ul>
+  </div>
+</article>
 `
 }
 
